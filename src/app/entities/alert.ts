@@ -1,5 +1,5 @@
-export class Alert {
-  id: string;
+export interface Alert {
+  _id: string;
   name: string;
   condition: string;
   amount: number;

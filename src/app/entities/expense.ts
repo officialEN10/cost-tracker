@@ -1,7 +1,7 @@
 import { Attachment } from './attachment';
 
-export class Expense {
-  id: string;
+export interface Expense {
+  _id: string;
   concept: string;
   amount: number;
   date: Date;

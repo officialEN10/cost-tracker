@@ -1,8 +1,8 @@
 import { Alert } from './alert';
 import { Expense } from './expense';
 
-export class Category {
-  id: string;
+export interface Category {
+  _id: string;
   name: string;
   maxValue: number;
   minValue: number;

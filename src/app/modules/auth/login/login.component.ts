@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/dashboard']);
         },
         (error) => {
-          this.error = error;
+          this.error = error.message;
           console.error(error);
         }
       );

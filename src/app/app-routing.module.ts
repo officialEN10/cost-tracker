@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { DynamicCategoriesComponent } from './modules/dynamicCategories/dynamic-categories.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
@@ -19,17 +20,10 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'categories',
+    path: 'dynamic_categories',
     loadChildren: () =>
-      import('./modules/categories/categories.module').then(
-        (m) => m.CategoriesModule
-      ),
-  },
-  {
-    path: 'expenses',
-    loadChildren: () =>
-      import('./modules/expenses/expenses.module').then(
-        (m) => m.ExpensesModule
+      import('./modules/dynamicCategories/dynamic-categories.module').then(
+        (m) => m.DynamicCategoriesModule
       ),
   },
   {

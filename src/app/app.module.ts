@@ -11,6 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderModule } from './layout/header/header.module';
 import { AuthGuard } from './guards/auth.guard';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [AppComponent, FooterComponent],
@@ -22,6 +23,7 @@ import { AuthGuard } from './guards/auth.guard';
     MatToolbarModule,
     HttpClientModule,
     HeaderModule,
+    MatTabsModule,
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],

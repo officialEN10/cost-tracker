@@ -3,15 +3,18 @@ import { CommonModule } from '@angular/common';
 
 import { AlertsRoutingModule } from './alerts-routing.module';
 import { AlertsComponent } from './alerts.component';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  declarations: [
-    AlertsComponent
-  ],
+  declarations: [AlertsComponent],
   imports: [
     CommonModule,
-    AlertsRoutingModule
-  ]
+    AlertsRoutingModule,
+    MatTableModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
 })
-export class AlertsModule { }
+export class AlertsModule {}

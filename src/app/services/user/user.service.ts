@@ -5,6 +5,9 @@ import { baseURL } from '../../../app/shared/baseurl';
 import { User } from 'src/app/entities/user';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Category } from 'src/app/entities/category';
+import { Expense } from 'src/app/entities/expense';
+import { Alert } from 'src/app/entities/alert';
 
 @Injectable({
   providedIn: 'root',
@@ -58,5 +61,95 @@ export class UserService {
   logOut() {
     localStorage.removeItem('user');
     this.userSubject.next(null);
+  }
+
+  getUserById(id: string): Observable<User> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+
+    return this.http.get<User>(baseURL + 'user/by-id/' + id, httpOptions);
+  }
+
+  getUserByEmail(email: string): Observable<User> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+
+    return this.http.get<User>(baseURL + 'user/by-email/' + email, httpOptions);
+  }
+
+  updateUser(id: string, updatedUser: User): Observable<User> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+
+    return this.http.put<User>(
+      baseURL + 'user/' + id,
+      updatedUser,
+      httpOptions
+    );
+  }
+
+  deleteUser(id: string): Observable<User> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+
+    return this.http.delete<User>(baseURL + 'user/' + id, httpOptions);
+  }
+
+  getCategoriesOfUser(id: string): Observable<Category[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+
+    return this.http.get<Category[]>(
+      baseURL + 'user/' + id + '/categories',
+      httpOptions
+    );
+  }
+
+  getExpensesOfUser(id: string): Observable<Expense[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+
+    return this.http.get<Expense[]>(
+      baseURL + 'user/' + id + '/expenses',
+      httpOptions
+    );
+  }
+
+  getAlertsOfUser(id: string): Observable<Alert[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+
+    return this.http.get<Alert[]>(
+      baseURL + 'user/' + id + '/alerts',
+      httpOptions
+    );
   }
 }

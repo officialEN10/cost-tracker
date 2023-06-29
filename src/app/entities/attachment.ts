@@ -1,5 +1,5 @@
-export class Attachment {
-  id: string;
+export interface Attachment {
+  _id: string;
   fileName: string;
   type: string;
   size: number;
