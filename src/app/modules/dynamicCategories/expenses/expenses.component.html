@@ -31,7 +31,10 @@
       <button mat-icon-button (click)="modifyExpense(expense._id)">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button (click)="deleteExpense(expense._id)">
+      <button
+        mat-icon-button
+        (click)="deleteExpense(expense._id, expense.concept)"
+      >
         <mat-icon>delete</mat-icon>
       </button>
     </mat-cell>

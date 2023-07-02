@@ -1,0 +1,25 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<form
+  *ngIf="!isLoading && categoryForm"
+  [formGroup]="categoryForm"
+  (ngSubmit)="onSubmit()"
+>
+  <mat-form-field>
+    <mat-label>Category Name</mat-label>
+    <input matInput formControlName="name" type="text" required />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Maximium value</mat-label>
+    <input matInput formControlName="max_value" type="number" required />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Minimum value</mat-label>
+    <input matInput formControlName="min_value" type="number" required />
+  </mat-form-field>
+  <button mat-raised-button type="submit" [disabled]="!categoryForm.valid">
+    Update Category
+  </button>
+  <button mat-raised-button type="button" (click)="onCancel()">Cancel</button>
+</form>

@@ -27,7 +27,10 @@
       <button mat-icon-button (click)="modifyCategory(category._id)">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button (click)="deleteCategory(category._id)">
+      <button
+        mat-icon-button
+        (click)="deleteCategory(category._id, category.name)"
+      >
         <mat-icon>delete</mat-icon>
       </button>
     </mat-cell>

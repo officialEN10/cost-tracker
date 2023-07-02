@@ -1,11 +1,11 @@
 import { Attachment } from './attachment';
 
 export interface Expense {
-  _id: string;
+  _id?: string;
   concept: string;
   amount: number;
   date: Date;
-  userId: string;
+  userId?: string;
   categoryId: string;
-  attachment: Attachment;
+  attachment?: Attachment | null;
 }

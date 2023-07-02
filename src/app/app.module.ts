@@ -12,9 +12,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { HeaderModule } from './layout/header/header.module';
 import { AuthGuard } from './guards/auth.guard';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DeleteExpenseDialogComponent } from './dialogs/delete-expense-dialog/delete-expense-dialog.component';
+import { DeleteCategoryDialogComponent } from './dialogs/delete-category-dialog/delete-category-dialog.component';
+import { DeleteAlertDialogComponent } from './dialogs/delete-alert-dialog/delete-alert-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, FooterComponent],
+  declarations: [AppComponent, FooterComponent, DeleteExpenseDialogComponent, DeleteCategoryDialogComponent, DeleteAlertDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -24,6 +28,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     HttpClientModule,
     HeaderModule,
     MatTabsModule,
+    MatDialogModule,
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],
