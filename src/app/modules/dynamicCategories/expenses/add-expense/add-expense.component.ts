@@ -62,7 +62,7 @@ export class AddExpenseComponent implements OnInit {
       this.expenseService.createExpense(expense).subscribe(
         (expense) => {
           console.log('New Expense: ', expense);
-          this.router.navigate(['/dynamic_categories']);
+          this.router.navigate(['/dynamic_categories/expenses']);
         },
         (err) => {
           console.log(err);
@@ -72,6 +72,6 @@ export class AddExpenseComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['/dynamic_categories']);
+    this.router.navigate(['/dynamic_categories/expenses']);
   }
 }

@@ -1,0 +1,29 @@
+<mat-table [dataSource]="overviewReports">
+  <!-- Date Column -->
+  <ng-container matColumnDef="date">
+    <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.date | date }} </mat-cell>
+  </ng-container>
+
+  <!-- Concept Column -->
+  <ng-container matColumnDef="concept">
+    <mat-header-cell *matHeaderCellDef> Concept </mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.concept }} </mat-cell>
+  </ng-container>
+
+  <!-- Category Column -->
+  <ng-container matColumnDef="category">
+    <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.category }} </mat-cell>
+    <!-- Assuming categoryId is a string -->
+  </ng-container>
+
+  <!-- Amount Column -->
+  <ng-container matColumnDef="amount">
+    <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.totalAmount }} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>

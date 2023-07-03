@@ -1,23 +1,25 @@
 <mat-toolbar color="primary">
   <span>Cost-Tracker App</span>
   <div *ngIf="user; else guestLinks">
-    <a mat-button [routerLink]="['/dashboard']" routerLinkActive="active"
-      >Dashboard</a
-    >
+    <a mat-button [routerLink]="['/dashboard']" routerLinkActive="active">
+      Dashboard
+    </a>
     <a
       mat-button
       [routerLink]="['/dynamic_categories']"
       routerLinkActive="active"
-      >Dynamic categories</a
     >
+      Dynamic categories
+    </a>
     <a mat-button [routerLink]="['/reports']" routerLinkActive="active"
-      >Monthly reports</a
-    >
+      >Monthly reports
+    </a>
     <a mat-button [routerLink]="['/alerts']" routerLinkActive="active"
-      >Custom alerts</a
-    >
+      >Custom alerts
+    </a>
     <a mat-button (click)="logOut()">
-      <span class="fa fa-sign-out fa-lg"></span> LogOut
+      <span class="fa fa-sign-out fa-lg"></span>
+      LogOut
     </a>
   </div>
 

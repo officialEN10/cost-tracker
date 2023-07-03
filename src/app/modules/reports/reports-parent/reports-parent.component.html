@@ -1,0 +1,43 @@
+<div class="reports-container">
+  <form [formGroup]="reportFrom" (ngSubmit)="onSubmit()">
+    <h3>Select Date:</h3>
+    <mat-form-field>
+      <input
+        matInput
+        type="number"
+        formControlName="month"
+        placeholder="Month"
+        min="1"
+        max="12"
+        required
+      />
+      <mat-hint>Month</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="number"
+        formControlName="year"
+        placeholder="Year"
+        min="2000"
+        max="reportForm.controls.year.value"
+        required
+      />
+      <mat-hint>Year</mat-hint>
+    </mat-form-field>
+
+    <button mat-fab extended color="primary" type="submit">
+      <mat-icon>search</mat-icon>
+      Submit
+    </button>
+  </form>
+  {{ month }} / {{ year }}
+
+  <mat-tab-group dynamicHeight="true" (selectedTabChange)="onTabChange($event)">
+    <mat-tab label="Overview" routerLink="overview-reports"> </mat-tab>
+    <mat-tab label="Categories" routerLink="categories-reports"> </mat-tab>
+    <mat-tab label="Alerts" routerLink="alerts-reports"> </mat-tab>
+  </mat-tab-group>
+
+  <router-outlet></router-outlet>
+</div>

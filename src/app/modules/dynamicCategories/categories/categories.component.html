@@ -20,6 +20,15 @@
     <!-- Assuming maxValue is a property of Category -->
   </ng-container>
 
+  <!-- Maximum Value Column -->
+  <ng-container matColumnDef="Current value">
+    <mat-header-cell *matHeaderCellDef> Current Value </mat-header-cell>
+    <mat-cell *matCellDef="let category">
+      {{ category.current_value }}
+    </mat-cell>
+    <!-- Assuming maxValue is a property of Category -->
+  </ng-container>
+
   <!-- Actions Column -->
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>

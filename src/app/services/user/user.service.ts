@@ -13,17 +13,17 @@ import { Alert } from 'src/app/entities/alert';
   providedIn: 'root',
 })
 export class UserService {
-  private userSubject: BehaviorSubject<User | null>; //observable to keep track of user state, null when user is not logged in
-  public user: Observable<User | null>;
+  private userSubject: BehaviorSubject<User | null>; //a subject to keep track of user state, null when user is not logged in
+  public user: Observable<User | null>; // an observable to save a readonly value of the subject
 
   constructor(private http: HttpClient) {
-    this.userSubject = new BehaviorSubject<User | null>(null); //we initiate it at
+    this.userSubject = new BehaviorSubject<User | null>(null); //we initiate it as null
 
     if (localStorage.getItem('token')) {
       //if token is available
       this.getUser().subscribe(); //we subscribe to the observable user and set it to userSubject and therefore  any changes in userSubject will be emitted to user
     }
-    this.user = this.userSubject.asObservable(); //we create a readonly observable to share with key users
+    this.user = this.userSubject.asObservable(); // we convert the subject into a readonly observable, whihc emits the same values
   }
 
   register(formData: {

@@ -8,16 +8,14 @@ import { DynamicCategoriesComponent } from './dynamic-categories.component';
 import { DynamicCategoriesRoutingModule } from './dynamic-categories-routing.module';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { CategoriesComponent } from './categories/categories.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { DynamicCategoriesParentComponent } from './dynamic-categories-parent/dynamic-categories-parent.component';
 
 @NgModule({
   declarations: [
     DynamicCategoriesComponent,
     ExpensesComponent,
     CategoriesComponent,
+    DynamicCategoriesParentComponent,
   ],
   imports: [
     CommonModule,
@@ -26,10 +24,6 @@ import { MatSelectModule } from '@angular/material/select';
     MatTableModule,
     MatIconModule,
     MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatSelectModule,
   ],
 })
 export class DynamicCategoriesModule {}

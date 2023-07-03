@@ -47,11 +47,14 @@ export class ExpensesComponent implements OnInit {
   }
 
   addExpense() {
-    this.router.navigate(['/dynamic_categories/addExpense']);
+    this.router.navigate(['/dynamic_categories/expenses/addExpense']);
   }
 
   modifyExpense(expenseId: string) {
-    this.router.navigate(['/dynamic_categories/modifyExpense', expenseId]);
+    this.router.navigate([
+      '/dynamic_categories/expenses/modifyExpense',
+      expenseId,
+    ]);
   }
 
   deleteExpense(expenseId: string, expenseConcept: string) {

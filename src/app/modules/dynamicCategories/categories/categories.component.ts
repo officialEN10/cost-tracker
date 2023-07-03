@@ -17,6 +17,7 @@ export class CategoriesComponent implements OnInit {
     'Category',
     'Minimum value',
     'Maximum value',
+    'Current value',
     'actions',
   ];
 
@@ -46,11 +47,14 @@ export class CategoriesComponent implements OnInit {
   }
 
   addCategory() {
-    this.router.navigate(['/dynamic_categories/addCategory']);
+    this.router.navigate(['/dynamic_categories/category/addCategory']);
   }
 
   modifyCategory(categoryId: string) {
-    this.router.navigate(['/dynamic_categories/modifyCategory', categoryId]);
+    this.router.navigate([
+      '/dynamic_categories/category/modifyCategory',
+      categoryId,
+    ]);
   }
 
   deleteCategory(catgId: string, catgName: string) {

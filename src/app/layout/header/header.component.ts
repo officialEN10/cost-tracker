@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/entities/user';
 import { UserService } from 'src/app/services/user/user.service';
 import { Router, Event, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -19,10 +20,14 @@ export class HeaderComponent implements OnInit {
       this.user = logged_user;
       console.log('header component -> user: ', this.user);
     });
-    this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd)
-        this.isLoginPage = this.router.url.includes('/auth/login'); //we compare the actual url after the nav ends with the login url
-    });
+    //we subscribe to the routers events to keep track of any changes in the router state
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: Event) => {
+        //if change is of type navigationEnd
+        if (event instanceof NavigationEnd)
+          this.isLoginPage = this.router.url.includes('/auth/login'); //we compare the actual url after the nav ends with the login url
+      });
   }
 
   logOut() {

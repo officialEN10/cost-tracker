@@ -108,7 +108,7 @@ export class ModifyExpenseComponent implements OnInit {
         .subscribe(
           (newUpdatedExpense) => {
             console.log(newUpdatedExpense);
-            this.router.navigate(['/dynamic_categories']);
+            this.router.navigate(['/dynamic_categories/expenses']);
           },
           (err) => {
             console.log(err);
@@ -118,6 +118,6 @@ export class ModifyExpenseComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['/dynamic_categories']);
+    this.router.navigate(['/dynamic_categories/expenses']);
   }
 }

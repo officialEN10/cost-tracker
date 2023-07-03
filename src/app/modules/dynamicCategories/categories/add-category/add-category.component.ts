@@ -41,7 +41,7 @@ export class AddCategoryComponent implements OnInit {
       this.categoryService.createCategory(newCategory).subscribe(
         (newCatg) => {
           console.log('New Category: ', newCatg);
-          this.router.navigate(['/dynamic_categories']);
+          this.router.navigate(['/dynamic_categories/category']);
         },
         (err) => {
           console.log(err);
@@ -51,6 +51,6 @@ export class AddCategoryComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['/dynamic_categories']);
+    this.router.navigate(['/dynamic_categories/category']);
   }
 }

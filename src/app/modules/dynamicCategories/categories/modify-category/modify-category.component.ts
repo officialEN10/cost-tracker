@@ -82,7 +82,7 @@ export class ModifyCategoryComponent implements OnInit {
         .subscribe(
           (newUpdatedCategory) => {
             console.log(newUpdatedCategory);
-            this.router.navigate(['/dynamic_categories']);
+            this.router.navigate(['/dynamic_categories/category']);
           },
           (err) => {
             console.log(err);
@@ -92,6 +92,6 @@ export class ModifyCategoryComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['/dynamic_categories']);
+    this.router.navigate(['/dynamic_categories/category']);
   }
 }

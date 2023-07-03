@@ -1,0 +1,11 @@
+<div class="dynamic-categories-container">
+  <mat-tab-group
+    [(selectedIndex)]="selectedIndex"
+    (selectedTabChange)="onTabChange($event)"
+  >
+    <mat-tab label="Expenses" routerLink="expenses"> </mat-tab>
+    <mat-tab label="Categories" routerLink="category"> </mat-tab>
+  </mat-tab-group>
+
+  <router-outlet></router-outlet>
+</div>

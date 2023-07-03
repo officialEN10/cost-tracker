@@ -1,0 +1,35 @@
+<mat-table [dataSource]="alertReports">
+  <!-- alert Column -->
+  <ng-container matColumnDef="alert">
+    <mat-header-cell *matHeaderCellDef> Alert </mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.alert }} </mat-cell>
+  </ng-container>
+
+  <!-- Category Column -->
+  <ng-container matColumnDef="category">
+    <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.category }} </mat-cell>
+    <!-- Assuming categoryId is a string -->
+  </ng-container>
+
+  <!-- condition Column -->
+  <ng-container matColumnDef="condition">
+    <mat-header-cell *matHeaderCellDef> condition </mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.condition }} </mat-cell>
+  </ng-container>
+
+  <!-- status Column -->
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef> status </mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.status }} </mat-cell>
+  </ng-container>
+
+  <!-- Date Column -->
+  <ng-container matColumnDef="date">
+    <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.date | date }} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>

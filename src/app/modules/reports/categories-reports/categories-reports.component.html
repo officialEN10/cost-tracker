@@ -1,0 +1,35 @@
+<mat-table [dataSource]="categoriesReports">
+  <!-- category Column -->
+  <ng-container matColumnDef="category">
+    <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.category }} </mat-cell>
+  </ng-container>
+
+  <!-- total amount Column -->
+  <ng-container matColumnDef="total amount">
+    <mat-header-cell *matHeaderCellDef> Total amount</mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.totalAmount }} </mat-cell>
+  </ng-container>
+
+  <!-- minimum value Column -->
+  <ng-container matColumnDef="minimum value">
+    <mat-header-cell *matHeaderCellDef> Minimum value </mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.min }} </mat-cell>
+    <!-- Assuming categoryId is a string -->
+  </ng-container>
+
+  <!-- maximum value Column -->
+  <ng-container matColumnDef="maximum value">
+    <mat-header-cell *matHeaderCellDef> maximum value </mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.max }} </mat-cell>
+  </ng-container>
+
+  <!-- status Column -->
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+    <mat-cell *matCellDef="let report"> {{ report.status }} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
