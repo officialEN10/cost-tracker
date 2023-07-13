@@ -31,7 +31,11 @@
     </mat-select>
   </mat-form-field>
 
-  <!-- Code for the attachment goes here -->
+  <!-- Code for the attachment  -->
+  <div class="form-group">
+    <label>Attachment</label>
+    <input type="file" (change)="onFileChange($event)" />
+  </div>
 
   <button mat-raised-button type="submit" [disabled]="!expenseForm.valid">
     Save Expense

@@ -6,6 +6,7 @@ import { Expense } from 'src/app/entities/expense';
 import { ExpenseService } from 'src/app/services/expenses/expense.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { DatePipe } from '@angular/common';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 
 @Component({
   selector: 'app-add-expense',
@@ -18,6 +19,7 @@ export class AddExpenseComponent implements OnInit {
   userId: string | any;
   today = new Date();
   private datePipe: DatePipe; //to convert the date to the right format YYYY/MM/DD
+  selectedFile: File | null = null;
 
   constructor(
     private router: Router,
@@ -47,6 +49,10 @@ export class AddExpenseComponent implements OnInit {
     });
   }
 
+  onFileChange(event: any) {
+    this.selectedFile = <File>event.target.files[0];
+  }
+
   onSubmit() {
     if (this.expenseForm.valid) {
       let expenseData = this.expenseForm.value;
@@ -59,7 +65,27 @@ export class AddExpenseComponent implements OnInit {
         categoryId: expenseData.category,
       };
 
-      this.expenseService.createExpense(expense).subscribe(
+      //to send a file, we have to send it as formData
+      let formData: FormData = new FormData();
+      if (this.selectedFile) {
+        formData.append(
+          'attachment', //key
+          this.selectedFile, //file
+          this.selectedFile.name //file name
+        );
+      }
+
+      //we iterate over the expense keys and we append them to the formdata that we are going to send
+      Object.keys(expense).forEach((key) => {
+        if (key === 'amount') {
+          //amount isn't a string, so we convert it to a string first
+          formData.append(key, (expense as any)[key].toString());
+        } else {
+          formData.append(key, (expense as any)[key]);
+        }
+      });
+
+      this.expenseService.createExpense(formData).subscribe(
         (expense) => {
           console.log('New Expense: ', expense);
           this.router.navigate(['/dynamic_categories/expenses']);

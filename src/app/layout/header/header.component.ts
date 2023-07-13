@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.userService.user.subscribe((logged_user) => {
       this.user = logged_user;
-      console.log('header component -> user: ', this.user);
+      // console.log('header component -> user: ', this.user);
     });
     //we subscribe to the routers events to keep track of any changes in the router state
     this.router.events

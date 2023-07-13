@@ -11,10 +11,9 @@ import { Attachment } from 'src/app/entities/attachment';
 export class AttachmentService {
   constructor(private http: HttpClient) {}
 
-  createAttachment(newAttachment: Attachment): Observable<Attachment> {
+  createAttachment(newAttachment: FormData): Observable<Attachment> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };
@@ -29,7 +28,6 @@ export class AttachmentService {
   getAttachment(idAttachment: string): Observable<Attachment> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };
@@ -38,6 +36,31 @@ export class AttachmentService {
       baseURL + 'attachment/' + idAttachment,
       httpOptions
     );
+  }
+
+  serveAttachment(idAttachment: string): Observable<Blob> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+      responseType: 'blob' as 'json',
+    };
+
+    return this.http.get<Blob>(
+      baseURL + 'attachment/download/' + idAttachment,
+      httpOptions
+    );
+  }
+
+  // A helper method for downloading the file
+  createAndDownloadFile(fileName: string, blob: Blob) {
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    link.click();
+    window.URL.revokeObjectURL(url);
   }
 
   updateAttachment(

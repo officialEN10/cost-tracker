@@ -12,10 +12,9 @@ import { Attachment } from 'src/app/entities/attachment';
 export class ExpenseService {
   constructor(private http: HttpClient) {}
 
-  createExpense(newExpense: Expense): Observable<Expense> {
+  createExpense(newExpense: FormData): Observable<Expense> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };
@@ -43,11 +42,10 @@ export class ExpenseService {
 
   updateExpense(
     idExpense: string,
-    updateExpense: Expense
+    updateExpense: FormData
   ): Observable<Expense> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };
@@ -72,18 +70,18 @@ export class ExpenseService {
       httpOptions
     );
   }
-
-  getExpenseAttachment(attachmentId: string): Observable<Attachment> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
-      }),
-    };
-
-    return this.http.get<Attachment>(
-      baseURL + 'attachment/' + attachmentId,
-      httpOptions
-    );
-  }
 }
+
+// getExpenseAttachment(attachmentId: string): Observable<Attachment> {
+//   const httpOptions = {
+//     headers: new HttpHeaders({
+//       'Content-Type': 'application/json',
+//       Authorization: 'Bearer ' + localStorage.getItem('token'),
+//     }),
+//   };
+
+//   return this.http.get<Attachment>(
+//     baseURL + 'attachment/' + attachmentId,
+//     httpOptions
+//   );
+// }

@@ -2,7 +2,7 @@
 <form
   *ngIf="!isLoading && expenseForm"
   [formGroup]="expenseForm"
-  (ngSubmit)="onSubmit()"
+  (ngSubmit)="onSubmit($event)"
 >
   <mat-form-field>
     <mat-label>Concept</mat-label>
@@ -37,7 +37,35 @@
   </mat-form-field>
 
   <!-- Code for the attachment goes here -->
+  <div class="form-group">
+    <label>Attachment</label>
+    <div *ngIf="attachment">
+      <p>
+        {{ attachment.fileName }}
+      </p>
+      <button
+        (click)="
+          downloadAttachment();
+          $event.stopPropagation();
+          $event.preventDefault()
+        "
+      >
+        <mat-icon>download</mat-icon>
+      </button>
+      <button
+        (click)="
+          removeAttachment(); $event.stopPropagation(); $event.preventDefault()
+        "
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
 
+    <div *ngIf="!attachment">
+      <input type="file" (change)="onFileChange($event)" />
+      <p>No attachment</p>
+    </div>
+  </div>
   <button mat-raised-button type="submit" [disabled]="!expenseForm.valid">
     Update Expense
   </button>

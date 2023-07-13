@@ -7,5 +7,5 @@ export interface Expense {
   date: Date;
   userId?: string;
   categoryId: string;
-  attachment?: Attachment | null;
+  attachment?: string | null;
 }

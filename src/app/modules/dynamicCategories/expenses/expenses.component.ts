@@ -5,6 +5,7 @@ import { ExpenseService } from 'src/app/services/expenses/expense.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteExpenseDialogComponent } from 'src/app/dialogs/delete-expense-dialog/delete-expense-dialog.component';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 
 @Component({
   selector: 'app-expenses',
@@ -18,6 +19,7 @@ export class ExpensesComponent implements OnInit {
     'concept',
     'category',
     'amount',
+    'attachment',
     'actions',
   ];
 
@@ -26,6 +28,7 @@ export class ExpensesComponent implements OnInit {
   constructor(
     private userService: UserService,
     private expenseService: ExpenseService,
+    private attachmentService: AttachmentService,
     private router: Router,
     private dialog: MatDialog
   ) {}
@@ -71,5 +74,20 @@ export class ExpensesComponent implements OnInit {
         //we dont do anything when dialog is closed
       }
     });
+  }
+
+  public downloadAttachment(idAttachment: string, fileName: string) {
+    this.attachmentService
+      .getAttachment(idAttachment)
+      .subscribe((attachment) => {
+        const fileExt = attachment.fileName.split('.').pop(); //we extract the file type from the file name
+        fileName += '.' + fileExt; // we add it to the file name
+        //we serve the attachment to the user
+        this.attachmentService
+          .serveAttachment(idAttachment)
+          .subscribe((blob) => {
+            this.attachmentService.createAndDownloadFile(fileName, blob);
+          });
+      });
   }
 }

@@ -16,9 +16,16 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteExpenseDialogComponent } from './dialogs/delete-expense-dialog/delete-expense-dialog.component';
 import { DeleteCategoryDialogComponent } from './dialogs/delete-category-dialog/delete-category-dialog.component';
 import { DeleteAlertDialogComponent } from './dialogs/delete-alert-dialog/delete-alert-dialog.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  declarations: [AppComponent, FooterComponent, DeleteExpenseDialogComponent, DeleteCategoryDialogComponent, DeleteAlertDialogComponent],
+  declarations: [
+    AppComponent,
+    FooterComponent,
+    DeleteExpenseDialogComponent,
+    DeleteCategoryDialogComponent,
+    DeleteAlertDialogComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,6 +36,11 @@ import { DeleteAlertDialogComponent } from './dialogs/delete-alert-dialog/delete
     HeaderModule,
     MatTabsModule,
     MatDialogModule,
+    ToastrModule.forRoot({
+      timeOut: 3000, // Duration in milliseconds
+      positionClass: 'toast-top-right', // Position of the toast notification
+      preventDuplicates: true, // Prevent duplicate messages
+    }),
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],

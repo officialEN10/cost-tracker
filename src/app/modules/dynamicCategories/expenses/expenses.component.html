@@ -24,6 +24,29 @@
     <mat-cell *matCellDef="let expense"> {{ expense.amount }} </mat-cell>
   </ng-container>
 
+  <!-- attachment  Column -->
+  <!-- here we gotta add an icon if the expense has an attachment or another icon if there is no attachment  -->
+  <ng-container matColumnDef="attachment">
+    <mat-header-cell *matHeaderCellDef> Attachment </mat-header-cell>
+    <mat-cell *matCellDef="let expense">
+      <ng-container *ngIf="expense.attachment">
+        <mat-icon
+          (click)="
+            downloadAttachment(
+              expense.attachment,
+              expense.concept + '_attachment'
+            )
+          "
+        >
+          attachment
+        </mat-icon>
+      </ng-container>
+      <ng-container *ngIf="!expense.attachment">
+        <mat-icon>link_off</mat-icon>
+      </ng-container>
+    </mat-cell>
+  </ng-container>
+
   <!-- Actions Column -->
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>

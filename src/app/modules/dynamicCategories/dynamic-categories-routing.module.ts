@@ -9,11 +9,11 @@ const routes: Routes = [
     path: '',
     component: DynamicCategoriesParentComponent,
     children: [
-      // {
-      //   path: '',
-      //   redirectTo: 'expenses',
-      //   pathMatch: 'full',
-      // },
+      {
+        path: '',
+        redirectTo: 'expenses',
+        pathMatch: 'full',
+      },
       {
         path: 'expenses',
         component: ExpensesComponent,
