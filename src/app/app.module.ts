@@ -17,6 +17,7 @@ import { DeleteExpenseDialogComponent } from './dialogs/delete-expense-dialog/de
 import { DeleteCategoryDialogComponent } from './dialogs/delete-category-dialog/delete-category-dialog.component';
 import { DeleteAlertDialogComponent } from './dialogs/delete-alert-dialog/delete-alert-dialog.component';
 import { ToastrModule } from 'ngx-toastr';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ToastrModule } from 'ngx-toastr';
     HeaderModule,
     MatTabsModule,
     MatDialogModule,
+    HighchartsChartModule,
     ToastrModule.forRoot({
       timeOut: 3000, // Duration in milliseconds
       positionClass: 'toast-top-right', // Position of the toast notification

@@ -3,16 +3,17 @@
     <mat-label>Category Name</mat-label>
     <input matInput formControlName="name" type="text" required />
   </mat-form-field>
+  
+  <mat-form-field>
+    <mat-label>Minimum value</mat-label>
+    <input matInput formControlName="min_value" type="number" required />
+  </mat-form-field>
 
   <mat-form-field>
     <mat-label>Maximium value</mat-label>
     <input matInput formControlName="max_value" type="number" required />
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Minimum value</mat-label>
-    <input matInput formControlName="min_value" type="number" required />
-  </mat-form-field>
   <button mat-raised-button type="submit" [disabled]="!categoryForm.valid">
     Save Category
   </button>
