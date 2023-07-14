@@ -1,0 +1,33 @@
+.custom-toolbar {
+  height: 35px;
+  align-items: center;
+  font-size: small;
+  background-color: #0059ff07;
+  color: #3F51B5;
+  .marquee {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .marquee-content {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 10s linear infinite; 
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(-100%, 0);
+    }
+  }
+
+}
+
+.heartbeat {
+	-webkit-animation: heartbeat 1.5s ease-in-out infinite both;
+	        animation: heartbeat 1.5s ease-in-out infinite both;
+}

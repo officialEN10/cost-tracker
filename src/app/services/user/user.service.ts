@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { baseURL } from '../../../app/shared/baseurl';
 import { User } from 'src/app/entities/user';
-import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Category } from 'src/app/entities/category';
 import { Expense } from 'src/app/entities/expense';
@@ -43,7 +42,7 @@ export class UserService {
   }
 
   getUser(): Observable<User> {
-    console.log('token: ', localStorage.getItem('token'));
+    // console.log('token: ', localStorage.getItem('token'));
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

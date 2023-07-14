@@ -5,6 +5,7 @@ import { DeleteCategoryDialogComponent } from 'src/app/dialogs/delete-category-d
 import { Category } from 'src/app/entities/category';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { CsvExportService } from 'src/app/shared/csv-export/csv-export.service';
 
 @Component({
   selector: 'app-categories',
@@ -26,6 +27,7 @@ export class CategoriesComponent implements OnInit {
   constructor(
     private userService: UserService,
     private categoryService: CategoryService,
+    private csvExportService: CsvExportService,
     private router: Router,
     private dialog: MatDialog
   ) {}
@@ -71,5 +73,16 @@ export class CategoriesComponent implements OnInit {
         //we dont do anything when dialog is closed
       }
     });
+  }
+
+  exportTable() {
+    let data = this.categories.map((row) => ({
+      "Category": row.name,
+      "Minimum Value": row.name,
+      "Maximum Value": row.maxValue,
+      "Current Value": row.current_value,
+    }));
+
+    this.csvExportService.downloadCSV(data, 'categories.csv');
   }
 }

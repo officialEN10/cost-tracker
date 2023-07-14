@@ -63,6 +63,7 @@ export class AddExpenseComponent implements OnInit {
           this.datePipe.transform(expenseData.date, 'yyyy-MM-dd')!
         ),
         categoryId: expenseData.category,
+        userId: this.userId
       };
 
       //to send a file, we have to send it as formData

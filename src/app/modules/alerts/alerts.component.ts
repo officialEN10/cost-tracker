@@ -5,6 +5,7 @@ import { DeleteAlertDialogComponent } from 'src/app/dialogs/delete-alert-dialog/
 import { Alert } from 'src/app/entities/alert';
 import { AlertService } from 'src/app/services/alert/alert.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { CsvExportService } from 'src/app/shared/csv-export/csv-export.service';
 
 @Component({
   selector: 'app-alerts',
@@ -27,6 +28,7 @@ export class AlertsComponent implements OnInit {
   constructor(
     private userService: UserService,
     private alertService: AlertService,
+    private csvExportService: CsvExportService,
     private router: Router,
     private dialog: MatDialog
   ) {}
@@ -69,4 +71,17 @@ export class AlertsComponent implements OnInit {
       }
     });
   }
+  exportTable() {
+    let data = this.alerts.map(row => ({
+      "Alert": row.name,
+      "Condition": row.condition,
+      "Amount": row.amount,
+      "Message": row.message,
+      "Status": row.status,
+    }));
+  
+    this.csvExportService.downloadCSV(data, 'alerts.csv');
+  }
+  
+  
 }

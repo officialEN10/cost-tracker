@@ -1,0 +1,11 @@
+<div *ngFor="let alert of triggeredAlerts">
+  <mat-toolbar class="custom-toolbar" color="warn">
+    <div class="marquee">
+      <div class="marquee-content">
+        <mat-icon>warning</mat-icon>
+        {{ alert.name }} alert triggered: {{ alert.message }}
+      </div>
+    </div>
+  </mat-toolbar>
+  <br />
+</div>

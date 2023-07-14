@@ -88,7 +88,7 @@ export class OverviewReportsComponent implements OnInit {
 
   prepareChartData(reports: OverviewReport[]) {
     let categories = [...new Set(reports.map((item) => item.category))];
-    console.log('categories:', categories);
+    // console.log('categories:', categories);
 
     let series: Highcharts.SeriesColumnOptions[] = categories.map(
       (category, index) => {
@@ -104,7 +104,7 @@ export class OverviewReportsComponent implements OnInit {
       }
     );
 
-    console.log('series: ', series);
+    // console.log('series: ', series);
     return { categories, series };
   }
 }

@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
-import { FooterComponent } from './layout/footer/footer.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderModule } from './layout/header/header.module';
@@ -18,11 +17,14 @@ import { DeleteCategoryDialogComponent } from './dialogs/delete-category-dialog/
 import { DeleteAlertDialogComponent } from './dialogs/delete-alert-dialog/delete-alert-dialog.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { MatDividerModule } from '@angular/material/divider';
+import { FooterModule } from './layout/footer/footer.module';
+import { MatIconModule } from '@angular/material/icon';
+import { AlertsToolbarModule } from './layout/alerts-toolbar/alerts-toolbar.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent,
     DeleteExpenseDialogComponent,
     DeleteCategoryDialogComponent,
     DeleteAlertDialogComponent,
@@ -34,10 +36,15 @@ import { HighchartsChartModule } from 'highcharts-angular';
     MatButtonModule,
     MatToolbarModule,
     HttpClientModule,
+    FooterModule,
     HeaderModule,
     MatTabsModule,
     MatDialogModule,
     HighchartsChartModule,
+    MatDividerModule,
+    MatIconModule,
+    MatToolbarModule,
+    AlertsToolbarModule,
     ToastrModule.forRoot({
       timeOut: 3000, // Duration in milliseconds
       positionClass: 'toast-top-right', // Position of the toast notification

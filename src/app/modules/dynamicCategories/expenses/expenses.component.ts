@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteExpenseDialogComponent } from 'src/app/dialogs/delete-expense-dialog/delete-expense-dialog.component';
 import { AttachmentService } from 'src/app/services/attachment/attachment.service';
+import { CsvExportService } from 'src/app/shared/csv-export/csv-export.service';
 
 @Component({
   selector: 'app-expenses',
@@ -29,6 +30,7 @@ export class ExpensesComponent implements OnInit {
     private userService: UserService,
     private expenseService: ExpenseService,
     private attachmentService: AttachmentService,
+    private csvExportService: CsvExportService,
     private router: Router,
     private dialog: MatDialog
   ) {}
@@ -89,5 +91,16 @@ export class ExpensesComponent implements OnInit {
             this.attachmentService.createAndDownloadFile(fileName, blob);
           });
       });
+  }
+
+  exportTable() {
+    let data = this.expenses.map((row) => ({
+      "Date": row.date,
+      "Concept": row.concept,
+      "Category": row.categoryId,
+      "Amount": row.amount,
+    }));
+
+    this.csvExportService.downloadCSV(data, 'expenses.csv');
   }
 }
