@@ -7,9 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HeaderModule } from './layout/header/header.module';
-import { AuthGuard } from './guards/auth.guard';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteExpenseDialogComponent } from './dialogs/delete-expense-dialog/delete-expense-dialog.component';
@@ -17,10 +16,13 @@ import { DeleteCategoryDialogComponent } from './dialogs/delete-category-dialog/
 import { DeleteAlertDialogComponent } from './dialogs/delete-alert-dialog/delete-alert-dialog.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HighchartsChartModule } from 'highcharts-angular';
-import { MatDividerModule } from '@angular/material/divider';
 import { FooterModule } from './layout/footer/footer.module';
 import { MatIconModule } from '@angular/material/icon';
 import { AlertsToolbarModule } from './layout/alerts-toolbar/alerts-toolbar.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { TokenInterceptor } from './guards/token.interceptor';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -41,17 +43,21 @@ import { AlertsToolbarModule } from './layout/alerts-toolbar/alerts-toolbar.modu
     MatTabsModule,
     MatDialogModule,
     HighchartsChartModule,
-    MatDividerModule,
     MatIconModule,
     MatToolbarModule,
     AlertsToolbarModule,
+    FlexLayoutModule,
+    MatSidenavModule,
+    MatListModule,
     ToastrModule.forRoot({
       timeOut: 3000, // Duration in milliseconds
       positionClass: 'toast-top-right', // Position of the toast notification
       preventDuplicates: true, // Prevent duplicate messages
     }),
   ],
-  providers: [AuthGuard],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

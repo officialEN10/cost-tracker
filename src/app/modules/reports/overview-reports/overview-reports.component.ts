@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { OverviewReport } from 'src/app/entities/overviewReport';
 import { DateService } from 'src/app/services/reports/date/date.service';
 import { ReportService } from 'src/app/services/reports/report.service';
@@ -16,22 +22,71 @@ HighchartsAccessibility(Highcharts);
   templateUrl: './overview-reports.component.html',
   styleUrls: ['./overview-reports.component.scss'],
 })
-export class OverviewReportsComponent implements OnInit {
+export class OverviewReportsComponent implements OnInit, OnChanges {
   //the filter values
   month: number;
   year: number;
+  error: string;
 
-  overviewReports: OverviewReport[];
+  overviewReports: OverviewReport[] = [];
   displayedColumns: string[] = ['date', 'concept', 'category', 'amount'];
 
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};
   chartDataLoaded: boolean = false;
+  @Input() reports: OverviewReport[];
 
   constructor(
     private dateService: DateService,
     private reportService: ReportService
   ) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['reports']) {
+      this.updateChart();
+    }
+  }
+
+  updateChart(): void {
+    // Prepare the data for chart
+    const charData = this.prepareChartData(this.reports);
+
+    console.log('chartData: ', charData);
+
+    // Update the chartOptions
+    this.chartOptions = {
+      ...this.chartOptions,
+      accessibility: {
+        enabled: false,
+      },
+      credits: {
+        enabled: false,
+      },
+      chart: {
+        type: 'column',
+      },
+      title: {
+        text: 'Overview Report',
+      },
+      xAxis: {
+        categories: charData.categories,
+        crosshair: true,
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Amount',
+        },
+      },
+      plotOptions: {
+        column: {
+          stacking: 'normal',
+        },
+      },
+      series: charData.series,
+    };
+    this.chartDataLoaded = true; //we dont renderit untill all the info is there
+  }
 
   ngOnInit() {
     this.dateService.currentDate.subscribe((date) => {
@@ -42,11 +97,10 @@ export class OverviewReportsComponent implements OnInit {
   }
 
   getOverviewReports(month: number, year: number): void {
-    this.reportService
-      .getOverview({ month: month, year: year })
-      .subscribe((reports) => {
+    this.reportService.getOverview({ month: month, year: year }).subscribe(
+      (reports) => {
         this.overviewReports = reports;
-        console.log(reports);
+        console.log('this.overviewReports: ', reports);
 
         // Prepare the data for chart
         const charData = this.prepareChartData(reports);
@@ -57,6 +111,9 @@ export class OverviewReportsComponent implements OnInit {
         this.chartOptions = {
           ...this.chartOptions,
           accessibility: {
+            enabled: false,
+          },
+          credits: {
             enabled: false,
           },
           chart: {
@@ -83,7 +140,13 @@ export class OverviewReportsComponent implements OnInit {
           series: charData.series,
         };
         this.chartDataLoaded = true; //we dont renderit untill all the info is there
-      });
+      },
+      (error) => {
+        this.error =
+          'Error: ' + error.error.message +'';
+        console.error(error);
+      }
+    );
   }
 
   prepareChartData(reports: OverviewReport[]) {

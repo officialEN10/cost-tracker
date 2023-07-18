@@ -12,6 +12,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ModifyExpenseRoutingModule } from './modify-expense-routing.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [ModifyExpenseComponent],
@@ -28,6 +30,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatProgressSpinnerModule,
     ModifyExpenseRoutingModule,
     MatSnackBarModule,
+    FlexLayoutModule,
+    MatCardModule,
   ],
   providers: [DatePipe],
 })

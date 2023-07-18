@@ -83,4 +83,8 @@ export class AlertService {
 
     return this.http.delete<Alert>(baseURL + 'alert/' + id, httpOptions);
   }
+
+  clear() {
+    this.triggeredAlertsSubject.next([]); // to clear toolbars when we logout
+  }
 }

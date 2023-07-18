@@ -30,6 +30,7 @@ export class ModifyExpenseComponent implements OnInit {
   selectedFile: File | null = null;
 
   private datePipe: DatePipe; //to convert the date to the right format YYYY/MM/DD
+  error: string;
 
   constructor(
     private router: Router,
@@ -138,6 +139,9 @@ export class ModifyExpenseComponent implements OnInit {
             this.snackBar.open('Failed to delete attachment', 'Close', {
               duration: 2000,
             });
+
+            this.error =
+              'Error: ' + error.error.message +'';
             console.error(error);
           }
         );
@@ -222,3 +226,4 @@ export class ModifyExpenseComponent implements OnInit {
     this.selectedFile = <File>event.target.files[0];
   }
 }
+

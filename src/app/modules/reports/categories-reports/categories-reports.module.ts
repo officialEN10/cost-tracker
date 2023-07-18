@@ -6,9 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { CategoriesPieChartComponent } from './categories-pie-chart/categories-pie-chart.component';
 
 @NgModule({
-  declarations: [CategoriesReportsComponent],
+  declarations: [CategoriesReportsComponent, CategoriesPieChartComponent],
   imports: [
     CommonModule,
     CategoriesReportsRoutingModule,
@@ -17,5 +18,6 @@ import { HighchartsChartModule } from 'highcharts-angular';
     MatButtonModule,
     HighchartsChartModule,
   ],
+  exports: [CategoriesPieChartComponent]
 })
 export class CategoriesReportsModule {}

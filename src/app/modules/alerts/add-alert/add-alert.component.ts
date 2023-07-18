@@ -16,6 +16,7 @@ export class AddAlertComponent implements OnInit {
   categories: Category[] = [];
   userId: string | any;
   conditions = ['greater than', 'less than', 'equal to'];
+  error: string;
 
   constructor(
     private router: Router,
@@ -59,8 +60,9 @@ export class AddAlertComponent implements OnInit {
           console.log('New alert: ', alert);
           this.router.navigate(['/alerts']);
         },
-        (err) => {
-          console.log(err);
+        (error) => {
+          this.error = 'Login invalid: '+error.error.message +"\n.Please try again";
+          console.error(error);
         }
       );
     }

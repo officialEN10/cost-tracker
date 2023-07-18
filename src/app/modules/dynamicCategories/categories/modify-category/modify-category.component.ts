@@ -16,6 +16,7 @@ export class ModifyCategoryComponent implements OnInit {
   categoryId: string;
   categoryToUpdate: Category;
   isLoading = false; // for spinner use
+  error: string;
 
   constructor(
     private router: Router,
@@ -84,8 +85,10 @@ export class ModifyCategoryComponent implements OnInit {
             console.log(newUpdatedCategory);
             this.router.navigate(['/dynamic_categories/category']);
           },
-          (err) => {
-            console.log(err);
+          (error) => {
+            this.error =
+              'Error: ' + error.error.message +'';
+            console.error(error);
           }
         );
     }

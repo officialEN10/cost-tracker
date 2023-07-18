@@ -6,6 +6,7 @@ import { AlertsComponent } from './alerts.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [AlertsComponent],
@@ -15,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatTableModule,
     MatIconModule,
     MatButtonModule,
+    MatCardModule,
   ],
 })
 export class AlertsModule {}

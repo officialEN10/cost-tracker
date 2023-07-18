@@ -17,5 +17,6 @@ import { HighchartsChartModule } from 'highcharts-angular';
     MatButtonModule,
     HighchartsChartModule,
   ],
+  exports: [OverviewReportsComponent],
 })
 export class OverviewReportsModule {}

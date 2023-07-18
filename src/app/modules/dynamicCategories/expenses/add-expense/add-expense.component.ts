@@ -6,7 +6,6 @@ import { Expense } from 'src/app/entities/expense';
 import { ExpenseService } from 'src/app/services/expenses/expense.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { DatePipe } from '@angular/common';
-import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 
 @Component({
   selector: 'app-add-expense',
@@ -20,6 +19,7 @@ export class AddExpenseComponent implements OnInit {
   today = new Date();
   private datePipe: DatePipe; //to convert the date to the right format YYYY/MM/DD
   selectedFile: File | null = null;
+  error: string;
 
   constructor(
     private router: Router,
@@ -44,7 +44,10 @@ export class AddExpenseComponent implements OnInit {
         //we get all the categories of the user
         this.userService
           .getCategoriesOfUser(this.userId)
-          .subscribe((categories) => (this.categories = categories));
+          .subscribe((categories) => {
+            this.categories = categories.filter(category => category.name.toLowerCase() !== 'uncategorized');
+            console.log(this.categories);
+          });
       }
     });
   }
@@ -63,7 +66,7 @@ export class AddExpenseComponent implements OnInit {
           this.datePipe.transform(expenseData.date, 'yyyy-MM-dd')!
         ),
         categoryId: expenseData.category,
-        userId: this.userId
+        userId: this.userId,
       };
 
       //to send a file, we have to send it as formData
@@ -91,8 +94,9 @@ export class AddExpenseComponent implements OnInit {
           console.log('New Expense: ', expense);
           this.router.navigate(['/dynamic_categories/expenses']);
         },
-        (err) => {
-          console.log(err);
+        (error) => {
+          this.error = 'Error: ' + error.error.message + '';
+          console.error(error);
         }
       );
     }

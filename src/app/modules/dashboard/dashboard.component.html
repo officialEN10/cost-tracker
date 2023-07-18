@@ -1,1 +1,18 @@
-<p>dashboard works!</p>
+<div fxLayout="row wrap" fxLayoutGap="16px" fxLayoutAlign="center center">
+  <mat-card fxFlex="80" fxFlex.lt-md="80" style="margin-bottom: 16px;">
+    <app-overview-reports
+      [reports]="overviewReports"
+      *ngIf="overviewReports"
+    ></app-overview-reports>
+  </mat-card>
+
+  <mat-card fxFlex="100" fxFlex.lt-md="100" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="16px" fxLayoutAlign="center center" style="margin-top: 16px">
+    <app-categories-pie-chart
+      [categoriesReports]="categoriesReports"
+    ></app-categories-pie-chart>
+    <div style="width: 100%; text-align: center">
+      <h2>Alerts Report</h2>
+      <app-alerts-reports [alertReports]="alertReports"></app-alerts-reports>
+    </div>
+  </mat-card>
+</div>

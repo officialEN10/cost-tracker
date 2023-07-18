@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [AddCategoryComponent],
@@ -24,6 +26,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     ReactiveFormsModule,
     MatSelectModule,
     AddCategoryRoutingModule,
+    FlexLayoutModule,
+    MatCardModule,
   ],
 })
 export class AddCategoryModule {}

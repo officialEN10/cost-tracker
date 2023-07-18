@@ -21,6 +21,7 @@ export class ModifyAlertComponent implements OnInit {
   alertId: string;
   category: Category | any; //to save the current catg of the expense
   isLoading = false; // for spinner use
+  error: string;
 
   constructor(
     private router: Router,
@@ -50,6 +51,9 @@ export class ModifyAlertComponent implements OnInit {
               .getCategoriesOfUser(this.userId)
               .subscribe((categories) => {
                 this.categories = categories;
+                console.log('this.categories :', this.categories);
+                console.log('this.alertToUpdate.categoryId :', this.alertToUpdate.categoryId);
+
                 this.category = this.categories.find((category) => {
                   return category._id == this.alertToUpdate.categoryId;
                 });
@@ -107,8 +111,9 @@ export class ModifyAlertComponent implements OnInit {
           console.log('New nweUpdatedAlert: ', newUpdatedAlert);
           this.router.navigate(['/alerts']);
         },
-        (err) => {
-          console.log(err);
+        (error) => {
+          this.error = 'Login invalid: '+error.error.message +"\n.Please try again";
+          console.error(error);
         }
       );
     }
@@ -118,3 +123,4 @@ export class ModifyAlertComponent implements OnInit {
     this.router.navigate(['/alerts']);
   }
 }
+

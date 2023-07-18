@@ -10,6 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { AddExpenseRoutingModule } from './add-expense-routing.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [AddExpenseComponent],
@@ -24,6 +26,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
+    FlexLayoutModule,
+    MatCardModule,
   ],
   providers: [DatePipe],
 })

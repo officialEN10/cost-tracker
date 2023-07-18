@@ -29,6 +29,7 @@ export const passwordMatchValidator: ValidatorFn = (
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   formErrors: Record<string, unknown> = {};
+  error: string;
 
   constructor(
     private fb: FormBuilder,
@@ -69,8 +70,13 @@ export class RegisterComponent implements OnInit {
       const user = this.registerForm.value;
       this.userService.register(user).subscribe((newUser) => {
         console.log(user);
+        //if registration is successful, we go to main page
+        this.router.navigate(['/auth/login']);
+      },
+      (error) => {
+        this.error = 'Registration invalid: '+error.error.message +"\n.Please try again";
+        console.error(error);
       });
-      this.router.navigate(['/auth/login']);
     }
   }
 }

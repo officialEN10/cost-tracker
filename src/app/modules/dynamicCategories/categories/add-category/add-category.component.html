@@ -1,21 +1,38 @@
-<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <mat-label>Category Name</mat-label>
-    <input matInput formControlName="name" type="text" required />
-  </mat-form-field>
-  
-  <mat-form-field>
-    <mat-label>Minimum value</mat-label>
-    <input matInput formControlName="min_value" type="number" required />
-  </mat-form-field>
+<mat-card>
+  <mat-card-title>Add Category</mat-card-title>
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Category Name</mat-label>
+      <input matInput formControlName="name" type="text" required />
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Maximium value</mat-label>
-    <input matInput formControlName="max_value" type="number" required />
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Minimum value</mat-label>
+      <input matInput formControlName="min_value" type="number" required />
+      <mat-error
+        *ngIf="categoryForm.controls['min_value'].hasError('minGreater')"
+      >
+        Min value cannot be greater than max value
+      </mat-error>
+    </mat-form-field>
 
-  <button mat-raised-button type="submit" [disabled]="!categoryForm.valid">
-    Save Category
-  </button>
-  <button mat-raised-button type="button" (click)="onCancel()">Cancel</button>
-</form>
+    <mat-form-field>
+      <mat-label>Maximium value</mat-label>
+      <input matInput formControlName="max_value" type="number" required />
+      <mat-error
+        *ngIf="categoryForm.controls['max_value'].hasError('minGreater')"
+      >
+        Max value cannot be less than min value
+      </mat-error>
+    </mat-form-field>
+
+    <div fxLayoutAlign="end center" fxLayoutGap="16px">
+      <button mat-raised-button type="submit" [disabled]="!categoryForm.valid">Save Category</button>
+      <button mat-raised-button type="button" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+  <div *ngIf="error">{{ error }}</div>
+</mat-card>
+

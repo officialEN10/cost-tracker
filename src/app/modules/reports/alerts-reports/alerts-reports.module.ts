@@ -15,5 +15,6 @@ import { MatTableModule } from '@angular/material/table';
     MatIconModule,
     MatButtonModule,
   ],
+  exports: [AlertsReportsComponent]
 })
 export class AlertsReportsModule {}

@@ -33,13 +33,12 @@ export class LoginComponent implements OnInit {
       const formData = this.loginForm.value;
       this.authService.login(formData).subscribe(
         (data) => {
-          // const accessToken = data.access_token;
-          // localStorage.setItem('token', accessToken);
           //if login is successful, we go to main page
           this.router.navigate(['/dashboard']);
         },
         (error) => {
-          this.error = error.message;
+          this.error =
+            'Login invalid: ' + error.error.message + '\n.Please try again';
           console.error(error);
         }
       );

@@ -4,7 +4,7 @@ import { tap } from 'rxjs/operators';
 import { baseURL } from '../../../app/shared/baseurl';
 import { Observable } from 'rxjs';
 import { UserService } from '../user/user.service';
-import { map, switchMap } from 'rxjs/operators';
+import {  switchMap } from 'rxjs/operators';
 import { User } from 'src/app/entities/user';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private http: HttpClient, private userService: UserService) {}
 
   login(formData: { username: string; password: string }): Observable<User> {
-    console.log('formData: ', formData);
+    // console.log('formData: ', formData);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

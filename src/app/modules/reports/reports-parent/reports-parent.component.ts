@@ -70,3 +70,4 @@ export class ReportsParentComponent implements OnInit {
     }
   }
 }
+

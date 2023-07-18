@@ -1,24 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/entities/user';
 import { UserService } from 'src/app/services/user/user.service';
 import { Router, Event, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
   user: User | null;
   isLoginPage: boolean = true;
+  @ViewChild('sidenav', { static: false }) sidenav: MatSidenav;
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
     this.userService.user.subscribe((logged_user) => {
       this.user = logged_user;
-      // console.log('header component -> user: ', this.user);
     });
     //we subscribe to the routers events to keep track of any changes in the router state
     this.router.events
@@ -32,8 +33,21 @@ export class HeaderComponent implements OnInit {
 
   logOut() {
     this.userService.logOut();
-    localStorage.clear();
     this.isLoginPage = true;
-    this.router.navigate(['/auth/login']);
+  }
+
+  ngAfterViewInit() {
+    console.log(this.sidenav); // just for debugging
+  }
+
+  toggleSidenav() {
+    this.sidenav.toggle();
+  }
+
+  reason = '';
+
+  close(reason: string) {
+    this.reason = reason;
+    this.sidenav.close();
   }
 }

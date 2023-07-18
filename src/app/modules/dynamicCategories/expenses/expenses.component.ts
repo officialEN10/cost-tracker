@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteExpenseDialogComponent } from 'src/app/dialogs/delete-expense-dialog/delete-expense-dialog.component';
 import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 import { CsvExportService } from 'src/app/shared/csv-export/csv-export.service';
+import { Category } from 'src/app/entities/category';
 
 @Component({
   selector: 'app-expenses',
@@ -23,8 +24,8 @@ export class ExpensesComponent implements OnInit {
     'attachment',
     'actions',
   ];
-
   userId: string | any;
+  categoriesMap: { [key: string]: string } = {}; //a map with key, value as strings {catgId: catgName}
 
   constructor(
     private userService: UserService,
@@ -44,12 +45,36 @@ export class ExpensesComponent implements OnInit {
       }
     });
   }
+  categories: Category[];
 
   getExpenses(): void {
-    this.userService
-      .getExpensesOfUser(this.userId)
-      .subscribe((expenses) => (this.expenses = expenses));
+    // First, we get the expenses of the user
+    this.userService.getExpensesOfUser(this.userId).subscribe((expenses) => {
+      // After receiving the expenses, we store them in the variable
+      this.expenses = expenses;
+      // Then, we fetch the categories of the user
+      this.userService
+        .getCategoriesOfUser(this.userId)
+        .subscribe((categories) => {
+          // Once we have the categories, we convert it into a map for easy access
+          // The map's key is the category's id and the value is the category's name
+          this.categoriesMap = categories.reduce((map: Record<string, string>, category) => {
+            // We make sure the category has an id before adding it to the map
+            if (category._id) {
+              map[category._id] = category.name;
+            }
+            return map;
+          }, {});
+          this.expenses.forEach((expense) => {
+            // For each expense, we replace its categoryId with the corresponding category name
+            if (this.categoriesMap[expense.categoryId]) {
+              expense.categoryId = this.categoriesMap[expense.categoryId];
+            }
+          });
+        });
+    });
   }
+  
 
   addExpense() {
     this.router.navigate(['/dynamic_categories/expenses/addExpense']);
@@ -95,10 +120,10 @@ export class ExpensesComponent implements OnInit {
 
   exportTable() {
     let data = this.expenses.map((row) => ({
-      "Date": row.date,
-      "Concept": row.concept,
-      "Category": row.categoryId,
-      "Amount": row.amount,
+      Date: row.date,
+      Concept: row.concept,
+      Category: row.categoryId,
+      Amount: row.amount,
     }));
 
     this.csvExportService.downloadCSV(data, 'expenses.csv');

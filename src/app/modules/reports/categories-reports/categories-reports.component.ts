@@ -19,6 +19,7 @@ export class CategoriesReportsComponent implements OnInit {
   //the filter values
   month: number;
   year: number;
+  error: string;
 
   categoriesReports: CategoriesReport[];
   displayedColumns: string[] = [
@@ -28,10 +29,6 @@ export class CategoriesReportsComponent implements OnInit {
     'maximum value',
     'status',
   ];
-
-  Highcharts: typeof Highcharts = Highcharts;
-  chartOptions: Highcharts.Options = {};
-  chartDataLoaded: boolean = false;
 
   constructor(
     private dateService: DateService,
@@ -47,66 +44,16 @@ export class CategoriesReportsComponent implements OnInit {
   }
 
   getCategoriesReport(month: number, year: number): void {
-    this.reportService
-      .getCategories({ month: month, year: year })
-      .subscribe((reports) => {
+    this.reportService.getCategories({ month: month, year: year }).subscribe(
+      (reports) => {
         this.categoriesReports = reports;
         console.log(reports);
-        // Prepare the data for chart
-        const charData = this.prepareChartData(reports);
-
-        console.log('chartData: ', charData);
-
-        // Update the chartOptions
-        this.chartOptions = {
-          chart: {
-              plotShadow: false,
-              type: 'pie'
-          },
-          title: {
-              text: 'Categories Report'
-          },
-          tooltip: {
-              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-          },
-          accessibility: {
-              point: {
-                  valueSuffix: '%'
-              }
-          },
-          plotOptions: {
-              pie: {
-                  allowPointSelect: true,
-                  cursor: 'pointer',
-                  dataLabels: {
-                      enabled: true,
-                      format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                  }
-              }
-          },
-          series: [{
-              type: 'pie',
-              name: 'Categories',
-              data: charData.seriesData
-          }]
-      };
-
-      // Indicate that data is loaded and chart can be rendered
-      this.chartDataLoaded = true;
-  });
-}
-
-
-
-  prepareChartData(reports: CategoriesReport[]) {
-    let seriesData = reports.map((item) => {
-        return {
-            name: item.category,
-            y: item.totalAmount
-        };
-    });
-
-    return { seriesData };
-}
-
+      },
+      (error) => {
+        this.error =
+          'Error: ' + error.error.message +'';
+        console.error(error);
+      }
+    );
+  }
 }

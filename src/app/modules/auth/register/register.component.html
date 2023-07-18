@@ -1,74 +1,106 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input matInput formControlName="email" type="email" required />
-    <mat-error *ngIf="registerForm.controls['email'].hasError('required')">
-      Please enter your email.
-    </mat-error>
-    <mat-error *ngIf="registerForm.controls['email'].hasError('email')">
-      Please enter a valid email.
-    </mat-error>
-  </mat-form-field>
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
+  <mat-card fxFlex="80%" fxFlex.gt-sm="50%" class="card">
+    <mat-card-header class="card-header">
+      <div class="avatar-wrapper">
+        <mat-icon mat-card-avatar class="header-icon"></mat-icon>
+      </div>
+      <div class="header-title">Register</div>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="text-center">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" required />
+          <mat-error
+            *ngIf="registerForm.controls['email'].hasError('required')"
+          >
+            Please enter your email.
+          </mat-error>
+          <mat-error *ngIf="registerForm.controls['email'].hasError('email')">
+            Please enter a valid email.
+          </mat-error>
+        </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput formControlName="name" required />
-    <mat-error *ngIf="registerForm.controls['name'].hasError('required')">
-      Please enter your name.
-    </mat-error>
-  </mat-form-field>
+        <mat-form-field class="text-center">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" required />
+          <mat-error *ngIf="registerForm.controls['name'].hasError('required')">
+            Please enter your name.
+          </mat-error>
+        </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Surname</mat-label>
-    <input matInput formControlName="surname" required />
-    <mat-error *ngIf="registerForm.controls['surname'].hasError('required')">
-      Please enter your surname.
-    </mat-error>
-  </mat-form-field>
+        <mat-form-field class="text-center">
+          <mat-label>Surname</mat-label>
+          <input matInput formControlName="surname" required />
+          <mat-error
+            *ngIf="registerForm.controls['surname'].hasError('required')"
+          >
+            Please enter your surname.
+          </mat-error>
+        </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Password</mat-label>
-    <input
-      matInput
-      formControlName="password"
-      type="password"
-      required
-      minlength="8"
-    />
-    <mat-error *ngIf="registerForm.controls['password'].hasError('required')">
-      Please enter your password.
-    </mat-error>
-    <mat-error *ngIf="registerForm.controls['password'].hasError('minlength')">
-      Password should be at least 8 characters.
-    </mat-error>
-  </mat-form-field>
+        <mat-form-field class="text-center">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            type="password"
+            required
+            minlength="8"
+          />
+          <mat-error
+            *ngIf="registerForm.controls['password'].hasError('required')"
+          >
+            Please enter your password.
+          </mat-error>
+          <mat-error
+            *ngIf="registerForm.controls['password'].hasError('minlength')"
+          >
+            Password should be at least 8 characters.
+          </mat-error>
+        </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Repeat Password</mat-label>
-    <input
-      matInput
-      formControlName="repeat_password"
-      type="password"
-      required
-    />
-    <mat-error
-      *ngIf="registerForm.controls['repeat_password'].hasError('required')"
-    >
-      Please repeat your password.
-    </mat-error>
-  </mat-form-field>
+        <mat-form-field class="text-center">
+          <mat-label>Repeat Password</mat-label>
+          <input
+            matInput
+            formControlName="repeat_password"
+            type="password"
+            required
+          />
+          <mat-error
+            *ngIf="
+              registerForm.controls['repeat_password'].hasError('required')
+            "
+          >
+            Please repeat your password.
+          </mat-error>
+        </mat-form-field>
 
-  <mat-error *ngIf="registerForm.hasError('passwordsNotMatching')">
-    Passwords must match.
-  </mat-error>
-
-  <button
-    mat-raised-button
-    color="primary"
-    type="submit"
-    [disabled]="registerForm.invalid"
-  >
-    Register
-  </button>
-</form>
-<p>Already have an account? <a routerLink="/auth/login">Log in here</a></p>
+        <mat-error *ngIf="registerForm.hasError('passwordsNotMatching')">
+          Passwords must match.
+        </mat-error>
+        <mat-card-actions>
+          <button
+            mat-button
+            color="primary"
+            type="submit"
+            class="wide-button prim-button"
+            [disabled]="registerForm.invalid"
+          >
+            Register
+          </button>
+          <button
+            mat-button
+            routerLink="/auth/login"
+            class="wide-button sec-button"
+          >
+            Login
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+    <p>Already have an account? <a routerLink="/auth/login">Log in here</a></p>
+    <div *ngIf="error">{{ error }}</div>
+  </mat-card>
+</div>

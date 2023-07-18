@@ -7,6 +7,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Category } from 'src/app/entities/category';
 import { Expense } from 'src/app/entities/expense';
 import { Alert } from 'src/app/entities/alert';
+import { Router } from '@angular/router';
+import { AlertService } from '../alert/alert.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +17,7 @@ export class UserService {
   private userSubject: BehaviorSubject<User | null>; //a subject to keep track of user state, null when user is not logged in
   public user: Observable<User | null>; // an observable to save a readonly value of the subject
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router, private alertService: AlertService) {
     this.userSubject = new BehaviorSubject<User | null>(null); //we initiate it as null
 
     if (localStorage.getItem('token')) {
@@ -31,7 +33,7 @@ export class UserService {
     email: string;
     password: string;
   }): Observable<User> {
-    console.log('formData: ', formData);
+    // console.log('formData: ', formData);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -58,8 +60,11 @@ export class UserService {
   }
 
   logOut() {
-    localStorage.removeItem('user');
+    this.router.navigate(['/auth/login']);
+    localStorage.clear();
     this.userSubject.next(null);
+    this.alertService.clear(); // we clear any state in your alert service, to prevent alerts from showing on toolbars
+
   }
 
   getUserById(id: string): Observable<User> {
