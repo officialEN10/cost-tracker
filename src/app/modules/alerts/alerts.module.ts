@@ -14,8 +14,8 @@ import { MatCardModule } from '@angular/material/card';
     CommonModule,
     AlertsRoutingModule,
     MatTableModule,
-    MatIconModule,
     MatButtonModule,
+    MatIconModule,
     MatCardModule,
   ],
 })

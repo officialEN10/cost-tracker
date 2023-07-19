@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
@@ -7,6 +7,7 @@ import { filter } from 'rxjs';
   selector: 'app-dynamic-categories-parent',
   templateUrl: './dynamic-categories-parent.component.html',
   styleUrls: ['./dynamic-categories-parent.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class DynamicCategoriesParentComponent implements OnInit {
   selectedIndex = 0;

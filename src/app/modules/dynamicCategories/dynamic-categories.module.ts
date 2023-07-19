@@ -9,6 +9,7 @@ import { DynamicCategoriesRoutingModule } from './dynamic-categories-routing.mod
 import { ExpensesComponent } from './expenses/expenses.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { DynamicCategoriesParentComponent } from './dynamic-categories-parent/dynamic-categories-parent.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { DynamicCategoriesParentComponent } from './dynamic-categories-parent/dy
     MatTableModule,
     MatIconModule,
     MatButtonModule,
+    MatCardModule,
   ],
 })
 export class DynamicCategoriesModule {}

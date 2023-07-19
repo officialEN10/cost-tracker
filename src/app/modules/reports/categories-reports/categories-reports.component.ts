@@ -2,14 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CategoriesReport } from 'src/app/entities/categoriesReport';
 import { DateService } from 'src/app/services/reports/date/date.service';
 import { ReportService } from 'src/app/services/reports/report.service';
-import * as Highcharts from 'highcharts';
-import HighchartsExporting from 'highcharts/modules/exporting';
-import HighchartsData from 'highcharts/modules/data';
-import HighchartsAccessibility from 'highcharts/modules/accessibility';
-
-HighchartsExporting(Highcharts);
-HighchartsData(Highcharts);
-HighchartsAccessibility(Highcharts);
 @Component({
   selector: 'app-categories-reports',
   templateUrl: './categories-reports.component.html',
@@ -47,11 +39,10 @@ export class CategoriesReportsComponent implements OnInit {
     this.reportService.getCategories({ month: month, year: year }).subscribe(
       (reports) => {
         this.categoriesReports = reports;
-        console.log(reports);
+        console.log('this.categoryReports: ', reports);
       },
       (error) => {
-        this.error =
-          'Error: ' + error.error.message +'';
+        this.error = 'Error: ' + error.error.message + '';
         console.error(error);
       }
     );

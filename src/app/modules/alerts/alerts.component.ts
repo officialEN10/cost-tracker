@@ -24,6 +24,7 @@ export class AlertsComponent implements OnInit {
   ];
 
   userId: string | any;
+  error: string;
 
   constructor(
     private userService: UserService,
@@ -43,9 +44,10 @@ export class AlertsComponent implements OnInit {
     });
   }
   getAlerts(): void {
-    this.userService
-      .getAlertsOfUser(this.userId)
-      .subscribe((alerts) => (this.alerts = alerts));
+    this.userService.getAlertsOfUser(this.userId).subscribe((alerts) => {
+      this.alertService.checkAlerts(alerts);
+      this.alerts = alerts;
+    });
   }
 
   addAlert() {
@@ -63,25 +65,32 @@ export class AlertsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.alertService.deleteAlert(alertId).subscribe((alert) => {
-          this.getAlerts(); //after deleting the alert, we refresh our list of alerts to get the latest changes
-        });
+        this.alertService.deleteAlert(alertId).subscribe(
+          (alert) => {
+            console.log('deleted alert: ', alert);
+            this.getAlerts(); //after deleting the alert, we refresh our list of alerts to get the latest changes
+          },
+          (error) => {
+            this.error =
+              'Error: ' + error.error.message + '\n.Please try again';
+            console.error(error);
+          }
+        );
       } else {
         //we dont do anything when dialog is closed
       }
     });
   }
+
   exportTable() {
-    let data = this.alerts.map(row => ({
-      "Alert": row.name,
-      "Condition": row.condition,
-      "Amount": row.amount,
-      "Message": row.message,
-      "Status": row.status,
+    let data = this.alerts.map((row) => ({
+      Alert: row.name,
+      Condition: row.condition,
+      Amount: row.amount,
+      Message: row.message,
+      Status: row.status,
     }));
-  
+
     this.csvExportService.downloadCSV(data, 'alerts.csv');
   }
-  
-  
 }

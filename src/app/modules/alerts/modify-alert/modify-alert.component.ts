@@ -50,9 +50,14 @@ export class ModifyAlertComponent implements OnInit {
             this.userService
               .getCategoriesOfUser(this.userId)
               .subscribe((categories) => {
-                this.categories = categories;
+                this.categories = categories.filter(
+                  (category) => category.name.toLowerCase() !== 'uncategorized'
+                );
                 console.log('this.categories :', this.categories);
-                console.log('this.alertToUpdate.categoryId :', this.alertToUpdate.categoryId);
+                console.log(
+                  'this.alertToUpdate.categoryId :',
+                  this.alertToUpdate.categoryId
+                );
 
                 this.category = this.categories.find((category) => {
                   return category._id == this.alertToUpdate.categoryId;
@@ -109,10 +114,13 @@ export class ModifyAlertComponent implements OnInit {
       this.alertService.updateAlert(this.alertId, updatedAlert).subscribe(
         (newUpdatedAlert) => {
           console.log('New nweUpdatedAlert: ', newUpdatedAlert);
+          this.userService.getAlertsOfUser(this.userId).subscribe((alerts) => {
+            this.alertService.checkAlerts(alerts);
+          });
           this.router.navigate(['/alerts']);
         },
         (error) => {
-          this.error = 'Login invalid: '+error.error.message +"\n.Please try again";
+          this.error = 'Error: ' + error.error.message + '\n.Please try again';
           console.error(error);
         }
       );
@@ -123,4 +131,3 @@ export class ModifyAlertComponent implements OnInit {
     this.router.navigate(['/alerts']);
   }
 }
-

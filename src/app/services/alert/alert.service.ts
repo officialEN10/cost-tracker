@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Alert } from 'src/app/entities/alert';
 import { baseURL } from '../../../app/shared/baseurl';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,6 @@ export class AlertService {
   private triggeredAlerts: Alert[] = [];
 
   constructor(private http: HttpClient) {}
-
   // Function that would check the alerts and decide to trigger or untrigger the alerts
   checkAlerts(alerts: Alert[]): void {
     alerts.forEach((alert) => {
@@ -32,8 +32,18 @@ export class AlertService {
         );
       }
     });
+
+    // we remove alerts from triggeredAlerts that no longer exist
+    this.triggeredAlerts = this.triggeredAlerts.filter((triggeredAlert) =>
+      alerts.find((alert) => alert.name === triggeredAlert.name)
+    );
+
     //we update the observable with the latest changes
     this.triggeredAlertsSubject.next(this.triggeredAlerts);
+    console.log(
+      'checkAlerts is checking alerts \nTriggerAlerts are the following: ',
+      this.triggeredAlerts
+    );
   }
 
   createAlert(newAlert: Alert): Observable<Alert> {
@@ -45,17 +55,6 @@ export class AlertService {
     };
 
     return this.http.post<Alert>(baseURL + 'alert', newAlert, httpOptions);
-  }
-
-  getAlert(id: string): Observable<Alert> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
-      }),
-    };
-
-    return this.http.get<Alert>(baseURL + 'alert/' + id, httpOptions);
   }
 
   updateAlert(id: string, updatedAlert: Alert): Observable<Alert> {
@@ -71,6 +70,17 @@ export class AlertService {
       updatedAlert,
       httpOptions
     );
+  }
+
+  getAlert(id: string): Observable<Alert> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+
+    return this.http.get<Alert>(baseURL + 'alert/' + id, httpOptions);
   }
 
   deleteAlert(id: string): Observable<Alert> {

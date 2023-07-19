@@ -1,8 +1,8 @@
-@import '/src/styles.scss';
+@import "/src/styles.scss";
 
 .header-icon {
   border-radius: 10%;
-  background-image: url('/assets/register_log.jpg');
+  background-image: url("/assets/register_log.jpg");
   background-size: cover;
   width: 100px;
   height: 100px;
@@ -20,9 +20,21 @@
   align-items: center;
 }
 
-.card {
+// .card {
+//     min-height: 950px;
+//   }
+
+@media (min-width: 2559px) {
+  .card {
+    min-height: 25px;
+  }
+}
+
+@media (max-width: 1921px) {
+  .card {
     min-height: 950px;
   }
+}
 
 .card-header {
   display: flex;
@@ -43,6 +55,5 @@
 }
 
 .text-center {
-    width: 95%;
-
-  }
+  width: 95%;
+}

@@ -14,6 +14,7 @@ import { UserService } from 'src/app/services/user/user.service';
 export class AddAlertComponent implements OnInit {
   alertForm: FormGroup;
   categories: Category[] = [];
+  alerts: Alert[];
   userId: string | any;
   conditions = ['greater than', 'less than', 'equal to'];
   error: string;
@@ -39,7 +40,11 @@ export class AddAlertComponent implements OnInit {
         this.userId = loggedUser._id;
         this.userService
           .getCategoriesOfUser(this.userId)
-          .subscribe((categories) => (this.categories = categories));
+          .subscribe((categories) => {
+            this.categories = categories.filter(
+              (category) => category.name.toLowerCase() !== 'uncategorized'
+            );
+          });
       }
     });
   }
@@ -58,10 +63,13 @@ export class AddAlertComponent implements OnInit {
       this.alertService.createAlert(alert).subscribe(
         (alert) => {
           console.log('New alert: ', alert);
+          this.userService.getAlertsOfUser(this.userId).subscribe((alerts) => {
+            this.alertService.checkAlerts(alerts);
+          });
           this.router.navigate(['/alerts']);
         },
         (error) => {
-          this.error = 'Login invalid: '+error.error.message +"\n.Please try again";
+          this.error = 'Error: ' + error.error.message + '\n.Please try again';
           console.error(error);
         }
       );

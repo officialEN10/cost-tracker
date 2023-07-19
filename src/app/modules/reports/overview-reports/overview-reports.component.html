@@ -1,5 +1,6 @@
 <div *ngIf="!error">
   <highcharts-chart
+    #chartRef
     *ngIf="chartDataLoaded"
     [Highcharts]="Highcharts"
     [options]="chartOptions"

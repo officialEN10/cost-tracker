@@ -1,16 +1,16 @@
-@import '/src/styles.scss';
+@import "/src/styles.scss";
 
 .header-icon {
   border-radius: 50%;
-  background-image: url('/assets/login_log.jpg'); 
+  background-image: url("/assets/login_log.jpg");
   background-size: cover;
-  width: 100px; 
-  height: 100px; 
+  width: 100px;
+  height: 100px;
   font-size: 48px;
 }
 
 .wide-button {
-  width: 80%; 
+  width: 80%;
 }
 
 .container {
@@ -23,7 +23,17 @@
 .card {
   min-height: 500px;
 }
+@media (min-width: 2559px) {
+  .card {
+    min-height: 350x;
+  }
+}
 
+@media (min-width: 1920px) {
+  .card {
+    min-height: 600px;
+  }
+}
 .card-header {
   display: flex;
   flex-direction: column;

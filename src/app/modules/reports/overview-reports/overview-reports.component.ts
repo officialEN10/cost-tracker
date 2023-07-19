@@ -2,8 +2,10 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { OverviewReport } from 'src/app/entities/overviewReport';
 import { DateService } from 'src/app/services/reports/date/date.service';
@@ -12,6 +14,8 @@ import * as Highcharts from 'highcharts';
 import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsData from 'highcharts/modules/data';
 import HighchartsAccessibility from 'highcharts/modules/accessibility';
+import { Subject, takeUntil } from 'rxjs';
+import { HighchartsChartComponent } from 'highcharts-angular';
 
 HighchartsExporting(Highcharts);
 HighchartsData(Highcharts);
@@ -22,7 +26,7 @@ HighchartsAccessibility(Highcharts);
   templateUrl: './overview-reports.component.html',
   styleUrls: ['./overview-reports.component.scss'],
 })
-export class OverviewReportsComponent implements OnInit, OnChanges {
+export class OverviewReportsComponent implements OnInit, OnChanges, OnDestroy {
   //the filter values
   month: number;
   year: number;
@@ -34,7 +38,10 @@ export class OverviewReportsComponent implements OnInit, OnChanges {
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};
   chartDataLoaded: boolean = false;
+  private unsubscribe$ = new Subject<void>(); //to unsubscribe
+
   @Input() reports: OverviewReport[];
+  @ViewChild('chartRef') chartRef: HighchartsChartComponent;
 
   constructor(
     private dateService: DateService,
@@ -42,7 +49,7 @@ export class OverviewReportsComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['reports']) {
+    if (changes['reports'] && changes['reports'].currentValue) {
       this.updateChart();
     }
   }
@@ -89,64 +96,67 @@ export class OverviewReportsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.dateService.currentDate.subscribe((date) => {
-      this.month = date.month;
-      this.year = date.year;
-      this.getOverviewReports(this.month, this.year);
-    });
+    this.dateService.currentDate
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((date) => {
+        this.month = date.month;
+        this.year = date.year;
+        this.getOverviewReports(this.month, this.year);
+      });
   }
 
   getOverviewReports(month: number, year: number): void {
-    this.reportService.getOverview({ month: month, year: year }).subscribe(
-      (reports) => {
-        this.overviewReports = reports;
-        console.log('this.overviewReports: ', reports);
+    this.reportService
+      .getOverview({ month: month, year: year })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (reports) => {
+          this.overviewReports = reports;
+          console.log('this.overviewReports: ', reports);
 
-        // Prepare the data for chart
-        const charData = this.prepareChartData(reports);
+          // Prepare the data for chart
+          const charData = this.prepareChartData(reports);
 
-        console.log('chartData: ', charData);
+          console.log('chartData: ', charData);
 
-        // Update the chartOptions
-        this.chartOptions = {
-          ...this.chartOptions,
-          accessibility: {
-            enabled: false,
-          },
-          credits: {
-            enabled: false,
-          },
-          chart: {
-            type: 'column',
-          },
-          title: {
-            text: 'Overview Report',
-          },
-          xAxis: {
-            categories: charData.categories,
-            crosshair: true,
-          },
-          yAxis: {
-            min: 0,
+          // Update the chartOptions
+          this.chartOptions = {
+            accessibility: {
+              enabled: false,
+            },
+            credits: {
+              enabled: false,
+            },
+            chart: {
+              type: 'column',
+            },
             title: {
-              text: 'Amount',
+              text: 'Overview Report',
             },
-          },
-          plotOptions: {
-            column: {
-              stacking: 'normal',
+            xAxis: {
+              categories: charData.categories,
+              crosshair: true,
             },
-          },
-          series: charData.series,
-        };
-        this.chartDataLoaded = true; //we dont renderit untill all the info is there
-      },
-      (error) => {
-        this.error =
-          'Error: ' + error.error.message +'';
-        console.error(error);
-      }
-    );
+            yAxis: {
+              min: 0,
+              title: {
+                text: 'Amount',
+              },
+            },
+            plotOptions: {
+              column: {
+                stacking: 'normal',
+              },
+            },
+            series: charData.series,
+          };
+          this.chartDataLoaded = true; //we dont renderit untill all the info is there
+        },
+        (error) => {
+          this.error = 'Error: ' + error.error.message + '';
+          console.error(error);
+        }
+      );
   }
 
   prepareChartData(reports: OverviewReport[]) {
@@ -169,5 +179,10 @@ export class OverviewReportsComponent implements OnInit, OnChanges {
 
     // console.log('series: ', series);
     return { categories, series };
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

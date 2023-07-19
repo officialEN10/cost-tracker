@@ -18,9 +18,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
+    //we see if the user is logged in or no
     this.userService.user.subscribe((logged_user) => {
       this.user = logged_user;
     });
+    //we see if we are supposed to be
     //we subscribe to the routers events to keep track of any changes in the router state
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))

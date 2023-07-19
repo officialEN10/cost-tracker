@@ -17,12 +17,23 @@ export class UserService {
   private userSubject: BehaviorSubject<User | null>; //a subject to keep track of user state, null when user is not logged in
   public user: Observable<User | null>; // an observable to save a readonly value of the subject
 
-  constructor(private http: HttpClient, private router: Router, private alertService: AlertService) {
+  private isLoginPageSubject: BehaviorSubject<boolean>; //a subject to keep track of login page status
+  public isLoginPage: Observable<boolean>; // an observable to save a readonly value of the subject isLoginPageSubject
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private alertService: AlertService
+  ) {
     this.userSubject = new BehaviorSubject<User | null>(null); //we initiate it as null
+
+    this.isLoginPageSubject = new BehaviorSubject<boolean>(true); // we initialize it as true to allow user to login
+    this.isLoginPage = this.isLoginPageSubject.asObservable();
 
     if (localStorage.getItem('token')) {
       //if token is available
       this.getUser().subscribe(); //we subscribe to the observable user and set it to userSubject and therefore  any changes in userSubject will be emitted to user
+      this.isLoginPageSubject.next(false);
     }
     this.user = this.userSubject.asObservable(); // we convert the subject into a readonly observable, whihc emits the same values
   }
@@ -64,7 +75,7 @@ export class UserService {
     localStorage.clear();
     this.userSubject.next(null);
     this.alertService.clear(); // we clear any state in your alert service, to prevent alerts from showing on toolbars
-
+    this.isLoginPageSubject.next(true);
   }
 
   getUserById(id: string): Observable<User> {

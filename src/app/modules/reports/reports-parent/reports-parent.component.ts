@@ -21,7 +21,7 @@ export class ReportsParentComponent implements OnInit {
     private fb: FormBuilder
   ) {
     const currentDate = new Date();
-
+    //we get the current month/year
     this.dateService.currentDate.subscribe((date) => {
       this.month = date.month;
       this.year = date.year;
@@ -70,4 +70,3 @@ export class ReportsParentComponent implements OnInit {
     }
   }
 }
-

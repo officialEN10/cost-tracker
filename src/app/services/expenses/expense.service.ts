@@ -4,7 +4,6 @@ import { Observable, tap } from 'rxjs';
 import { Expense } from 'src/app/entities/expense';
 
 import { baseURL } from '../../../app/shared/baseurl';
-import { Attachment } from 'src/app/entities/attachment';
 import { AlertService } from '../alert/alert.service';
 import { UserService } from '../user/user.service';
 
@@ -12,7 +11,11 @@ import { UserService } from '../user/user.service';
   providedIn: 'root',
 })
 export class ExpenseService {
-  constructor(private http: HttpClient, private alertService: AlertService, private userService: UserService) {}
+  constructor(
+    private http: HttpClient,
+    private alertService: AlertService,
+    private userService: UserService
+  ) {}
 
   createExpense(newExpense: FormData): Observable<Expense> {
     const httpOptions = {
@@ -21,14 +24,10 @@ export class ExpenseService {
       }),
     };
 
-    
-    return this.http.post<Expense>(
-      baseURL + 'expense',
-      newExpense,
-      httpOptions
-      ).pipe(tap(_ => this.checkAlerts()));  // Check alerts after expense creation
-    }
-  
+    return this.http
+      .post<Expense>(baseURL + 'expense', newExpense, httpOptions)
+      .pipe(tap((_) => this.checkAlerts())); // Check alerts after expense creation
+  }
 
   updateExpense(
     idExpense: string,
@@ -40,11 +39,13 @@ export class ExpenseService {
       }),
     };
 
-    return this.http.put<Expense>(
-      baseURL + 'expense/' + idExpense,
-      updateExpense,
-      httpOptions
-      ).pipe(tap(_ => this.checkAlerts()));// Check alerts after expense creation
+    return this.http
+      .put<Expense>(
+        baseURL + 'expense/' + idExpense,
+        updateExpense,
+        httpOptions
+      )
+      .pipe(tap((_) => this.checkAlerts())); // Check alerts after expense creation
   }
 
   private checkAlerts(): void {
@@ -56,7 +57,6 @@ export class ExpenseService {
       }
     });
   }
-
 
   getExpense(idExpense: string): Observable<Expense> {
     const httpOptions = {
@@ -72,7 +72,6 @@ export class ExpenseService {
     );
   }
 
-  
   deleteExpense(idExpense: string): Observable<Expense> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -81,23 +80,8 @@ export class ExpenseService {
       }),
     };
 
-    return this.http.delete<Expense>(
-      baseURL + 'expense/' + idExpense,
-      httpOptions
-    );
+    return this.http
+      .delete<Expense>(baseURL + 'expense/' + idExpense, httpOptions)
+      .pipe(tap((_) => this.checkAlerts())); // Check alerts after expense deletion
   }
 }
-
-// getExpenseAttachment(attachmentId: string): Observable<Attachment> {
-//   const httpOptions = {
-//     headers: new HttpHeaders({
-//       'Content-Type': 'application/json',
-//       Authorization: 'Bearer ' + localStorage.getItem('token'),
-//     }),
-//   };
-
-//   return this.http.get<Attachment>(
-//     baseURL + 'attachment/' + attachmentId,
-//     httpOptions
-//   );
-// }

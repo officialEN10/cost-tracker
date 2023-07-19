@@ -1,5 +1,5 @@
 <div class="container" fxLayout="column" fxLayoutAlign="center center">
-  <mat-card fxFlex="80%" fxFlex.gt-sm="50%" class="card">
+  <mat-card fxFlex="80%" fxFlex.gt-sm="80%" class="card">
     <mat-card-header class="card-header">
       <div class="avatar-wrapper">
         <mat-icon mat-card-avatar class="header-icon"></mat-icon>
@@ -80,7 +80,14 @@
         <mat-error *ngIf="registerForm.hasError('passwordsNotMatching')">
           Passwords must match.
         </mat-error>
-        <mat-card-actions>
+        <mat-card-actions
+          ><button
+            mat-button
+            routerLink="/auth/login"
+            class="wide-button sec-button"
+          >
+            Login
+          </button>
           <button
             mat-button
             color="primary"
@@ -89,13 +96,6 @@
             [disabled]="registerForm.invalid"
           >
             Register
-          </button>
-          <button
-            mat-button
-            routerLink="/auth/login"
-            class="wide-button sec-button"
-          >
-            Login
           </button>
         </mat-card-actions>
       </form>

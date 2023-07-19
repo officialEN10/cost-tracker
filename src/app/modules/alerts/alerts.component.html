@@ -1,16 +1,21 @@
 <div fxLayout="column" fxLayoutGap="16px">
   <mat-card>
-    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
-      <button mat-raised-button class="add-alert-btn" style="width:80%;" (click)="addAlert()">
-        Add Alert
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <button
+        mat-raised-button
+        class="add-btn"
+        style="width: 70%"
+        (click)="addAlert()"
+      >
+        <mat-icon>add</mat-icon> Add Alert
       </button>
       <button
         mat-raised-button
         class="export-btn"
-        style="width:20%;"
+        style="width: 30%"
         (click)="exportTable()"
       >
-        Export to CSV
+        <mat-icon>file_download</mat-icon> Export to CSV
       </button>
     </div>
     <mat-table [dataSource]="alerts">
@@ -61,4 +66,5 @@
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
   </mat-card>
+  <div *ngIf="error">{{ error }}</div>
 </div>
