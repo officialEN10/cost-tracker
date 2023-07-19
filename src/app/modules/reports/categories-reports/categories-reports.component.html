@@ -1,8 +1,8 @@
-<div class="report">
+<div class="report" *ngIf="emptyMessage">
   <h2 style="text-align: center">Categories Report</h2>
 
   <!-- we show empty message if no reports -->
-  <div *ngIf="emptyMessage" class="empty-message">
+  <div class="empty-message">
     <mat-icon class="warning-icon">warning</mat-icon>
     <div class="message-details">
       <h4>Important Message</h4>

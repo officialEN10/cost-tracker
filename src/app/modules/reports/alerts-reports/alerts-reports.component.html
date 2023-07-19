@@ -1,8 +1,8 @@
-<div class="report">
+<div class="report" *ngIf="emptyMessage">
   <h2 style="text-align: center">Alerts Report</h2>
 
   <!-- we show empty message if no reports -->
-  <div *ngIf="emptyMessage" class="empty-message">
+  <div class="empty-message">
     <mat-icon class="warning-icon">warning</mat-icon>
     <div class="message-details">
       <h4>Important Message</h4>
@@ -12,6 +12,8 @@
 </div>
 
 <div class="report" *ngIf="alertReports.length > 0 && !error">
+  <h2 style="text-align: center">Alerts Report</h2>
+
   <mat-table [dataSource]="alertReports">
     <!-- alert Column -->
     <ng-container matColumnDef="alert">
