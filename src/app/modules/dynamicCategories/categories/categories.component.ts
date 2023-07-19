@@ -21,8 +21,9 @@ export class CategoriesComponent implements OnInit {
     'Current value',
     'actions',
   ];
-
   userId: string | any;
+  error: string;
+  emptyMessage: string;
 
   constructor(
     private userService: UserService,
@@ -45,7 +46,16 @@ export class CategoriesComponent implements OnInit {
   getCategories(): void {
     this.userService
       .getCategoriesOfUser(this.userId)
-      .subscribe((categories) => (this.categories = categories));
+      .subscribe((categories) => {
+        this.categories = categories;
+        if (this.categories.length == 1) {
+          //if the user has no alerts, i show a message that the user should create an alert
+          this.emptyMessage =
+            "You don't have any categories yet. Create categories by clicking the 'Add Category' button.";
+        } else {
+          this.emptyMessage = '';
+        }
+      });
   }
 
   addCategory() {
@@ -66,9 +76,16 @@ export class CategoriesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.categoryService.deleteCategory(catgId).subscribe((category) => {
-          this.getCategories(); //after deleting the category, we refresh our list of caregories to get the latest changes
-        });
+        this.categoryService.deleteCategory(catgId).subscribe(
+          (category) => {
+            this.getCategories(); //after deleting the category, we refresh our list of caregories to get the latest changes
+          },
+          (error) => {
+            this.error =
+              'Error: ' + error.error.message + '\n.Please try again';
+            console.error(error);
+          }
+        );
       } else {
         //we dont do anything when dialog is closed
       }
@@ -76,13 +93,15 @@ export class CategoriesComponent implements OnInit {
   }
 
   exportTable() {
-    let data = this.categories.map((row) => ({
-      "Category": row.name,
-      "Minimum Value": row.name,
-      "Maximum Value": row.maxValue,
-      "Current Value": row.current_value,
-    }));
+    if (this.categories.length !== 0) {
+      let data = this.categories.map((row) => ({
+        Category: row.name,
+        'Minimum Value': row.name,
+        'Maximum Value': row.maxValue,
+        'Current Value': row.current_value,
+      }));
 
-    this.csvExportService.downloadCSV(data, 'categories.csv');
+      this.csvExportService.downloadCSV(data, 'categories.csv');
+    }
   }
 }

@@ -19,57 +19,65 @@ export class CategoriesPieChartComponent implements OnChanges {
   chartOptions: Highcharts.Options = {};
   @Input() categoriesReports: CategoriesReport[];
   chartDataLoaded: boolean = false;
+  emptyMessage: string;
 
   ngOnChanges(changes: SimpleChanges) {
     if (
       changes['categoriesReports'] &&
       changes['categoriesReports'].currentValue
     ) {
-      // Prepare the data for chart
-      const charData = this.prepareChartData(this.categoriesReports);
+      if (this.categoriesReports.length == 0) {
+        //if the user has no reports, i show a message that the user doesn't have reports for the selected month
+        this.emptyMessage =
+          "You don't have any reports for the selected month.";
+      } else {
+        this.emptyMessage = '';
+        // Prepare the data for chart
+        const charData = this.prepareChartData(this.categoriesReports);
 
-      console.log('chartData: ', charData);
+        // console.log('chartData: ', charData);
 
-      // Update the chartOptions
-      this.chartOptions = {
-        chart: {
-          plotShadow: false,
-          type: 'pie',
-        },
-        credits: {
-          enabled: false,
-        },
-        title: {
-          text: 'Categories Report',
-        },
-        tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
-        },
-        accessibility: {
-          point: {
-            valueSuffix: '%',
+        // Update the chartOptions
+        this.chartOptions = {
+          chart: {
+            plotShadow: false,
+            type: 'pie',
           },
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+          credits: {
+            enabled: false,
+          },
+          title: {
+            text: 'Categories Report',
+          },
+          tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
+          },
+          accessibility: {
+            point: {
+              valueSuffix: '%',
             },
           },
-        },
-        series: [
-          {
-            type: 'pie',
-            name: 'Categories',
-            data: charData.seriesData,
+          plotOptions: {
+            pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              },
+            },
           },
-        ],
-      };
-      // Indicate that data is loaded and chart can be rendered
-      this.chartDataLoaded = true;
+          series: [
+            {
+              type: 'pie',
+              name: 'Categories',
+              data: charData.seriesData,
+            },
+          ],
+        };
+        // Indicate that data is loaded and chart can be rendered
+        this.chartDataLoaded = true;
+      }
     }
   }
 

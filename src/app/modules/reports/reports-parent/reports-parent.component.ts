@@ -50,10 +50,10 @@ export class ReportsParentComponent implements OnInit {
   onTabChange(event: MatTabChangeEvent) {
     switch (event.index) {
       case 0:
-        this.router.navigate(['reports/overview-reports']);
+        this.router.navigate(['reports/categories-reports']);
         break;
       case 1:
-        this.router.navigate(['reports/categories-reports']);
+        this.router.navigate(['reports/overview-reports']);
         break;
       case 2:
         this.router.navigate(['reports/alerts-reports']);

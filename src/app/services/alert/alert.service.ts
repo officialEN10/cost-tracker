@@ -40,10 +40,10 @@ export class AlertService {
 
     //we update the observable with the latest changes
     this.triggeredAlertsSubject.next(this.triggeredAlerts);
-    console.log(
-      'checkAlerts is checking alerts \nTriggerAlerts are the following: ',
-      this.triggeredAlerts
-    );
+    // console.log(
+    //   'checkAlerts is checking alerts \nTriggerAlerts are the following: ',
+    //   this.triggeredAlerts
+    // );
   }
 
   createAlert(newAlert: Alert): Observable<Alert> {

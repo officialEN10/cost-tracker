@@ -15,7 +15,6 @@ import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsData from 'highcharts/modules/data';
 import HighchartsAccessibility from 'highcharts/modules/accessibility';
 import { Subject, takeUntil } from 'rxjs';
-import { HighchartsChartComponent } from 'highcharts-angular';
 
 HighchartsExporting(Highcharts);
 HighchartsData(Highcharts);
@@ -26,76 +25,39 @@ HighchartsAccessibility(Highcharts);
   templateUrl: './overview-reports.component.html',
   styleUrls: ['./overview-reports.component.scss'],
 })
-export class OverviewReportsComponent implements OnInit, OnChanges, OnDestroy {
-  //the filter values
-  month: number;
-  year: number;
-  error: string;
-
+// export class OverviewReportsComponent implements OnInit, OnChanges, OnDestroy {
+export class OverviewReportsComponent implements OnInit, OnDestroy {
+  @Input() useCurrentDate: boolean = false; // we use it in the dashboard
   overviewReports: OverviewReport[] = [];
-  displayedColumns: string[] = ['date', 'concept', 'category', 'amount'];
 
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};
   chartDataLoaded: boolean = false;
   private unsubscribe$ = new Subject<void>(); //to unsubscribe
 
-  @Input() reports: OverviewReport[];
-  @ViewChild('chartRef') chartRef: HighchartsChartComponent;
+  //the filter values
+  month: number;
+  year: number;
+  error: string;
+
+  displayedColumns: string[] = ['date', 'concept', 'category', 'amount'];
+
+  emptyMessage: string;
 
   constructor(
     private dateService: DateService,
     private reportService: ReportService
   ) {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['reports'] && changes['reports'].currentValue) {
-      this.updateChart();
+  ngOnInit() {
+    if (this.useCurrentDate) {
+      this.getCurrentMonthYearReport();
+    } else {
+      this.getReportsBasedOnSelectedDate();
     }
   }
 
-  updateChart(): void {
-    // Prepare the data for chart
-    const charData = this.prepareChartData(this.reports);
-
-    console.log('chartData: ', charData);
-
-    // Update the chartOptions
-    this.chartOptions = {
-      ...this.chartOptions,
-      accessibility: {
-        enabled: false,
-      },
-      credits: {
-        enabled: false,
-      },
-      chart: {
-        type: 'column',
-      },
-      title: {
-        text: 'Overview Report',
-      },
-      xAxis: {
-        categories: charData.categories,
-        crosshair: true,
-      },
-      yAxis: {
-        min: 0,
-        title: {
-          text: 'Amount',
-        },
-      },
-      plotOptions: {
-        column: {
-          stacking: 'normal',
-        },
-      },
-      series: charData.series,
-    };
-    this.chartDataLoaded = true; //we dont renderit untill all the info is there
-  }
-
-  ngOnInit() {
+  getReportsBasedOnSelectedDate() {
     this.dateService.currentDate
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((date) => {
@@ -105,6 +67,13 @@ export class OverviewReportsComponent implements OnInit, OnChanges, OnDestroy {
       });
   }
 
+  getCurrentMonthYearReport(): void {
+    const currentDate = new Date();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    this.getOverviewReports(month, year);
+  }
+
   getOverviewReports(month: number, year: number): void {
     this.reportService
       .getOverview({ month: month, year: year })
@@ -112,45 +81,50 @@ export class OverviewReportsComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(
         (reports) => {
           this.overviewReports = reports;
-          console.log('this.overviewReports: ', reports);
+          if (this.overviewReports.length == 0) {
+            //if the user has no reports, i show a message that the user doesn't have reports for the selected month
+            this.emptyMessage =
+              "You don't have any reports for the selected month.";
+          } else {
+            this.emptyMessage = '';
+            // Prepare the data for chart
+            const charData = this.prepareChartData(reports);
 
-          // Prepare the data for chart
-          const charData = this.prepareChartData(reports);
+            console.log('chartData: ', charData);
 
-          console.log('chartData: ', charData);
-
-          // Update the chartOptions
-          this.chartOptions = {
-            accessibility: {
-              enabled: false,
-            },
-            credits: {
-              enabled: false,
-            },
-            chart: {
-              type: 'column',
-            },
-            title: {
-              text: 'Overview Report',
-            },
-            xAxis: {
-              categories: charData.categories,
-              crosshair: true,
-            },
-            yAxis: {
-              min: 0,
+            // Update the chartOptions
+            this.chartOptions = {
+              accessibility: {
+                enabled: false,
+              },
+              credits: {
+                enabled: false,
+              },
+              chart: {
+                type: 'column',
+              },
               title: {
-                text: 'Amount',
+                text: 'Overview Report',
               },
-            },
-            plotOptions: {
-              column: {
-                stacking: 'normal',
+              xAxis: {
+                categories: charData.categories,
+                crosshair: true,
               },
-            },
-            series: charData.series,
-          };
-          this.chartDataLoaded = true; //we dont renderit untill all the info is there
+              yAxis: {
+                min: 0,
+                title: {
+                  text: 'Amount',
+                },
+              },
+              plotOptions: {
+                column: {
+                  stacking: 'normal',
+                },
+              },
+              series: charData.series,
+            };
+            this.chartDataLoaded = true; //we dont renderit untill all the info is there
+          }
         },
         (error) => {
           this.error = 'Error: ' + error.error.message + '';

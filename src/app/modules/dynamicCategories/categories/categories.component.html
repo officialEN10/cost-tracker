@@ -18,7 +18,17 @@
         <mat-icon>file_download</mat-icon> Export to CSV
       </button>
     </div>
-    <mat-table [dataSource]="categories">
+
+    <!-- we show empty message if no categories -->
+    <div *ngIf="emptyMessage" class="empty-message">
+      <mat-icon class="warning-icon">warning</mat-icon>
+      <div class="message-details">
+        <h4>Important Message</h4>
+        <p>{{ emptyMessage }}</p>
+      </div>
+    </div>
+
+    <mat-table [dataSource]="categories" *ngIf="categories.length > 1">
       <!-- Category Column -->
       <ng-container matColumnDef="Category">
         <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>

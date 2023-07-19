@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.sidenav); // just for debugging
+    // console.log(this.sidenav); // just for debugging
   }
 
   toggleSidenav() {

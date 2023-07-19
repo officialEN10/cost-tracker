@@ -7,6 +7,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { debounceTime } from 'rxjs';
 import { Category } from 'src/app/entities/category';
 import { CategoryService } from 'src/app/services/category/category.service';
 
@@ -34,25 +35,29 @@ export class AddCategoryComponent implements OnInit {
       },
       this.minLessThanMaxValidator
     );
-    this.categoryForm.controls['min_value'].valueChanges.subscribe(() => {
-      this.checkMinValue();
-    });
-  
-    this.categoryForm.controls['max_value'].valueChanges.subscribe(() => {
-      this.checkMinValue();
-    });
+    this.categoryForm.controls['min_value'].valueChanges
+      .pipe(debounceTime(0))
+      .subscribe(() => {
+        this.checkMinValue();
+      });
+
+    this.categoryForm.controls['max_value'].valueChanges
+      .pipe(debounceTime(1000)) // we postpone the entrance by 1 second so the user has time to finish setting the max value and system reads the final value and does the comparison max > min
+      .subscribe(() => {
+        this.checkMinValue();
+      });
   }
-  
+
   checkMinValue(): void {
-    const min = this.categoryForm.controls['min_value'].value;
-    const max = this.categoryForm.controls['max_value'].value;
-    if (min && max && min > max) {
+    const min = parseInt(this.categoryForm.controls['min_value'].value); // we compare them as int and not as strinsg
+    const max = parseInt(this.categoryForm.controls['max_value'].value);
+    if (min && max && min >= max) {
       this.categoryForm.controls['min_value'].setErrors({ minGreater: true });
     }
   }
   checkMaxValue(): void {
-    const min = this.categoryForm.controls['min_value'].value;
-    const max = this.categoryForm.controls['max_value'].value;
+    const min = parseInt(this.categoryForm.controls['min_value'].value);
+    const max = parseInt(this.categoryForm.controls['max_value'].value);
     if (min && max && min > max) {
       this.categoryForm.controls['max_value'].setErrors({ minGreater: true });
     }

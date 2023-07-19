@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [AddAlertComponent],
@@ -24,6 +25,7 @@ import { MatCardModule } from '@angular/material/card';
     TextFieldModule,
     FlexLayoutModule,
     MatCardModule,
+    MatIconModule,
   ],
 })
 export class AddAlertModule {}

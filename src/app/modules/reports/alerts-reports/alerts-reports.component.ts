@@ -9,7 +9,8 @@ import { ReportService } from 'src/app/services/reports/report.service';
   styleUrls: ['./alerts-reports.component.scss'],
 })
 export class AlertsReportsComponent implements OnInit {
-  @Input() alertReports: AlertsReport[];
+  @Input() useCurrentDate: boolean = false; // we use it in the dashboard
+  alertReports: AlertsReport[];
 
   //the filter values
   month: number;
@@ -24,12 +25,29 @@ export class AlertsReportsComponent implements OnInit {
     'date',
   ];
 
+  emptyMessage: string;
+
   constructor(
     private dateService: DateService,
     private reportService: ReportService
   ) {}
 
   ngOnInit() {
+    if (this.useCurrentDate) {
+      this.getCurrentMonthYearReport();
+    } else {
+      this.getReportsBasedOnSelectedDate();
+    }
+  }
+
+  getCurrentMonthYearReport(): void {
+    const currentDate = new Date();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    this.getAlertsReport(month, year);
+  }
+
+  getReportsBasedOnSelectedDate() {
     this.dateService.currentDate.subscribe((date) => {
       this.month = date.month;
       this.year = date.year;
@@ -41,11 +59,16 @@ export class AlertsReportsComponent implements OnInit {
     this.reportService.getAlerts({ month: month, year: year }).subscribe(
       (reports) => {
         this.alertReports = reports;
-        console.log(reports);
+        if (this.alertReports.length == 0) {
+          //if the user has no reports, i show a message that the user doesn't have reports for the selected month
+          this.emptyMessage =
+            "You don't have any reports for the selected month.";
+        } else {
+          this.emptyMessage = '';
+        }
       },
       (error) => {
-        this.error =
-          'Error: ' + error.error.message +'';
+        this.error = 'Error: ' + error.error.message + '';
         console.error(error);
       }
     );

@@ -22,6 +22,8 @@ export class CategoriesReportsComponent implements OnInit {
     'status',
   ];
 
+  emptyMessage: string;
+
   constructor(
     private dateService: DateService,
     private reportService: ReportService
@@ -39,7 +41,13 @@ export class CategoriesReportsComponent implements OnInit {
     this.reportService.getCategories({ month: month, year: year }).subscribe(
       (reports) => {
         this.categoriesReports = reports;
-        console.log('this.categoryReports: ', reports);
+        if (this.categoriesReports.length == 0) {
+          //if the user has no reports, i show a message that the user doesn't have reports for the selected month
+          this.emptyMessage =
+            "You don't have any reports for the selected month.";
+        } else {
+          this.emptyMessage = '';
+        }
       },
       (error) => {
         this.error = 'Error: ' + error.error.message + '';

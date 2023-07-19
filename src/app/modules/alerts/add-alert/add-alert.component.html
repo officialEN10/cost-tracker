@@ -1,6 +1,31 @@
 <mat-card>
   <mat-card-title>Add Alert</mat-card-title>
-  <form [formGroup]="alertForm" (ngSubmit)="onSubmit()">
+
+  <!-- we show empty message if no categories -->
+  <div *ngIf="categories.length === 0" class="empty-message">
+    <mat-icon class="warning-icon">warning</mat-icon>
+    <div class="message-details">
+      <h4>No Categories Available</h4>
+      <p>
+        Please create categories first in dynamic categories from the menu to be
+        able to create alerts.
+      </p>
+    </div>
+    <button
+      class="go-back-button"
+      mat-raised-button
+      type="button"
+      (click)="onCancel()"
+    >
+      Go back
+    </button>
+  </div>
+
+  <form
+    [formGroup]="alertForm"
+    (ngSubmit)="onSubmit()"
+    *ngIf="categories.length > 0"
+  >
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" type="text" required />

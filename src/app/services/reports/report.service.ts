@@ -22,6 +22,7 @@ export class ReportService {
       params: this.createHttpParams(report),
     };
 
+    console.log('reports: ', report);
     return this.http.get<OverviewReport[]>(
       baseURL + 'report/overview',
       httpOptions

@@ -20,6 +20,7 @@ export class AddExpenseComponent implements OnInit {
   private datePipe: DatePipe; //to convert the date to the right format YYYY/MM/DD
   selectedFile: File | null = null;
   error: string;
+  emptyMessage: string;
 
   constructor(
     private router: Router,
@@ -45,8 +46,13 @@ export class AddExpenseComponent implements OnInit {
         this.userService
           .getCategoriesOfUser(this.userId)
           .subscribe((categories) => {
-            this.categories = categories.filter(category => category.name.toLowerCase() !== 'uncategorized');
-            console.log(this.categories);
+            this.categories = categories.filter(
+              (category) => category.name.toLowerCase() !== 'uncategorized'
+            );
+            if (this.categories.length === 0) {
+              this.emptyMessage =
+                'No categories available. Please create categories first to be able to create alerts.';
+            }
           });
       }
     });

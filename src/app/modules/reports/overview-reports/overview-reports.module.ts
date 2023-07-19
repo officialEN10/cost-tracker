@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [OverviewReportsComponent],
@@ -16,6 +17,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
     MatIconModule,
     MatButtonModule,
     HighchartsChartModule,
+    MatCardModule,
   ],
   exports: [OverviewReportsComponent],
 })

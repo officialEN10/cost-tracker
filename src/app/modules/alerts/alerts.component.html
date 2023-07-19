@@ -18,7 +18,17 @@
         <mat-icon>file_download</mat-icon> Export to CSV
       </button>
     </div>
-    <mat-table [dataSource]="alerts">
+
+    <!-- we show empty message if no alerts -->
+    <div *ngIf="emptyMessage" class="empty-message">
+      <mat-icon class="warning-icon">warning</mat-icon>
+      <div class="message-details">
+        <h4>Important Message</h4>
+        <p>{{ emptyMessage }}</p>
+      </div>
+    </div>
+
+    <mat-table [dataSource]="alerts" *ngIf="alerts.length > 0">
       <!-- Alert Column -->
       <ng-container matColumnDef="Alert">
         <mat-header-cell *matHeaderCellDef> Alert </mat-header-cell>
@@ -39,8 +49,12 @@
 
       <!-- Message Column -->
       <ng-container matColumnDef="Message">
-        <mat-header-cell *matHeaderCellDef> Message </mat-header-cell>
-        <mat-cell *matCellDef="let alert"> {{ alert.message }} </mat-cell>
+        <mat-header-cell *matHeaderCellDef class="scrollable-cell">
+          Message
+        </mat-header-cell>
+        <mat-cell *matCellDef="let alert" class="scrollable-cell">
+          {{ alert.message }}
+        </mat-cell>
       </ng-container>
 
       <!-- Status Column -->

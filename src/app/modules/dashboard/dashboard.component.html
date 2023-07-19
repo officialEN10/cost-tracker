@@ -1,23 +1,24 @@
-<div fxLayout="row wrap" fxLayoutGap="16px" fxLayoutAlign="center center">
-  <mat-card fxFlex="80" fxFlex.lt-md="80" style="margin-bottom: 16px">
-    <app-overview-reports *ngIf="overviewReports"></app-overview-reports>
-  </mat-card>
-
-  <mat-card
-    fxFlex="100"
-    fxFlex.lt-md="100"
-    fxLayout="row"
-    fxLayout.lt-md="column"
-    fxLayoutGap="16px"
-    fxLayoutAlign="center center"
-    style="margin-top: 16px"
-  >
-    <app-categories-pie-chart
-      [categoriesReports]="categoriesReports"
-    ></app-categories-pie-chart>
-    <div style="width: 100%; text-align: center">
-      <h2>Alerts Report</h2>
-      <app-alerts-reports [alertReports]="alertReports"></app-alerts-reports>
+<mat-card
+  ><div fxLayout="row wrap" fxLayoutGap="16px" fxLayoutAlign="center center">
+    <div
+      fxFlex="100"
+      fxFlex.lt-md="100"
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="center center"
+      style="padding: 160px; padding-bottom: 16px"
+    >
+      <app-categories-pie-chart
+        [categoriesReports]="categoriesReports"
+      ></app-categories-pie-chart>
+      <div style="width: 100%; text-align: center">
+        <app-alerts-reports [useCurrentDate]="true"></app-alerts-reports>
+      </div>
     </div>
-  </mat-card>
-</div>
+    <div fxFlex="80" fxFlex.lt-md="80" style="padding: 80px">
+      <app-overview-reports [useCurrentDate]="true"></app-overview-reports>
+    </div>
+  </div>
+</mat-card>
+<!-- <app-overview-reports *ngIf="overviewReports"></app-overview-reports> -->

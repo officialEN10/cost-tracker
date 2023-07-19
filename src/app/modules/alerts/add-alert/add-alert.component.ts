@@ -18,6 +18,7 @@ export class AddAlertComponent implements OnInit {
   userId: string | any;
   conditions = ['greater than', 'less than', 'equal to'];
   error: string;
+  emptyMessage: string;
 
   constructor(
     private router: Router,
@@ -44,6 +45,10 @@ export class AddAlertComponent implements OnInit {
             this.categories = categories.filter(
               (category) => category.name.toLowerCase() !== 'uncategorized'
             );
+            if (this.categories.length === 0) {
+              this.emptyMessage =
+                'No categories available. Please create categories first to be able to create alerts.';
+            }
           });
       }
     });

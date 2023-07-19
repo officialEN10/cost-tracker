@@ -1,6 +1,31 @@
 <mat-card>
   <mat-card-title>Add Expense</mat-card-title>
-  <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+
+  <!-- we show empty message if no categories -->
+  <div *ngIf="categories.length === 0" class="empty-message">
+    <mat-icon class="warning-icon">warning</mat-icon>
+    <div class="message-details">
+      <h4>No Categories Available</h4>
+      <p>
+        Please create categories first in dynamic categories from the menu to be
+        able to create alerts.
+      </p>
+    </div>
+    <button
+      class="go-back-button"
+      mat-raised-button
+      type="button"
+      (click)="onCancel()"
+    >
+      Go back
+    </button>
+  </div>
+
+  <form
+    [formGroup]="expenseForm"
+    (ngSubmit)="onSubmit()"
+    *ngIf="categories.length > 0"
+  >
     <mat-form-field>
       <mat-label>Concept</mat-label>
       <input matInput formControlName="concept" type="text" required />
@@ -34,8 +59,8 @@
     </mat-form-field>
 
     <!-- Code for the attachment  -->
-    <div class="form-group">
-      <label>Attachment</label>
+    <div style="margin-bottom: 16px">
+      <h4 style="margin-right: 16px">Attachment:</h4>
       <input type="file" (change)="onFileChange($event)" />
     </div>
     <div fxLayoutAlign="end center" fxLayoutGap="16px">

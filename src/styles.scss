@@ -99,3 +99,56 @@ mat-header-cell {
   background-color: $dark-blue;
   color: white;
 }
+
+.report {
+  padding: 75px;
+}
+
+.empty-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  margin: 16px;
+  background-color: #ffeeba;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  position: relative;
+}
+
+.warning-icon {
+  // margin-right: 16px;
+  padding: 50px;
+  color: #ffc107;
+}
+
+.message-details {
+  text-align: center;
+}
+
+.message-details h4 {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.message-details p {
+  margin: 0;
+}
+
+.go-back-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 16px;
+}
+
+.wide-column {
+  width: 300px !important;
+}
+
+// .scrollable-cell {
+//   max-width: 300px;
+//   max-height: 300px;
+//   overflow-x: auto;
+//   // overflow-y: auto;
+// }
