@@ -83,7 +83,7 @@ export class ModifyAlertComponent implements OnInit {
                     Validators.required
                   ),
                   category: new FormControl(
-                    this.category.name,
+                    this.category ? this.category.name : null,
                     Validators.required
                   ),
                 });

@@ -13,7 +13,7 @@ export class CategoriesReportsComponent implements OnInit {
   year: number;
   error: string;
 
-  categoriesReports: CategoriesReport[];
+  categoriesReports: CategoriesReport[] = [];
   displayedColumns: string[] = [
     'category',
     'total amount',

@@ -13,7 +13,7 @@ import { CsvExportService } from 'src/app/shared/csv-export/csv-export.service';
   styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit {
-  categories: Category[];
+  categories: Category[] = [];
   displayedColumns: string[] = [
     'Category',
     'Minimum value',

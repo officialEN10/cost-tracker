@@ -96,7 +96,7 @@ export class ModifyExpenseComponent implements OnInit {
                     Validators.required
                   ),
                   category: new FormControl(
-                    this.category.name,
+                    this.category ? this.category.name : null,
                     Validators.required
                   ),
                 });
@@ -140,8 +140,7 @@ export class ModifyExpenseComponent implements OnInit {
               duration: 2000,
             });
 
-            this.error =
-              'Error: ' + error.error.message +'';
+            this.error = 'Error: ' + error.error.message + '';
             console.error(error);
           }
         );
@@ -226,4 +225,3 @@ export class ModifyExpenseComponent implements OnInit {
     this.selectedFile = <File>event.target.files[0];
   }
 }
-

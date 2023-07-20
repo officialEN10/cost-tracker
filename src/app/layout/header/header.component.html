@@ -1,7 +1,7 @@
 <mat-toolbar class="toolbar" fxLayout="row" fxLayoutAlign="start center">
-  <button mat-icon-button (click)="toggleSidenav()" fxShow="true" fxHide.gt-sm>
-    <mat-icon>menu</mat-icon>
-  </button>
+  <!-- <button mat-icon-button (click)="toggleSidenav()" fxShow="true" fxHide.gt-sm> -->
+  <!-- <mat-icon>menu</mat-icon> -->
+  <!-- </button> -->
   <span>Cost-Tracker</span>
   <div
     *ngIf="user; else guestLinks"
@@ -10,12 +10,7 @@
     fxFlex
   >
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="">
-      <a
-        mat-button
-        [routerLink]="['/dashboard']"
-        routerLinkActive="active"
-       
-      >
+      <a mat-button [routerLink]="['/dashboard']" routerLinkActive="active">
         <mat-icon>dashboard</mat-icon>
         Dashboard
       </a>
@@ -23,39 +18,28 @@
         mat-button
         [routerLink]="['/dynamic_categories']"
         routerLinkActive="active"
-       
       >
         <mat-icon>category</mat-icon>
         Dynamic categories
       </a>
-      <a
-        mat-button
-        [routerLink]="['/reports']"
-        routerLinkActive="active"
-       
-      >
+      <a mat-button [routerLink]="['/reports']" routerLinkActive="active">
         <mat-icon>assignment</mat-icon>
         Monthly reports
       </a>
-      <a
-        mat-button
-        [routerLink]="['/alerts']"
-        routerLinkActive="active"
-       
-      >
+      <a mat-button [routerLink]="['/alerts']" routerLinkActive="active">
         <mat-icon>notifications</mat-icon>
         Custom alerts
       </a>
     </div>
     <div fxLayout="row" fxLayoutAlign="end center">
-      <a mat-button (click)="logOut()" fxShow fxHide.lt-md>
+      <a mat-button (click)="logOut()">
         <mat-icon>exit_to_app</mat-icon>
         LogOut
       </a>
     </div>
   </div>
   <ng-template #guestLinks>
-    <div fxLayout="row" fxLayoutAlign="end center">
+    <div fxLayout="row" fxLayoutAlign="end center" fxFlex>
       <div *ngIf="!isLoginPage">
         <a mat-button [routerLink]="['/auth/login']" routerLinkActive="active">
           <mat-icon>login</mat-icon>
@@ -76,9 +60,14 @@
   </ng-template>
 </mat-toolbar>
 
-<!-- <mat-drawer-container  class="">
-  <mat-sidenav #sidenav mode="push" fixedInViewport="true"  hasBackdrop="true">
-    <mat-nav-list>
+<!-- <mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #sidenav
+    class="sidenav"
+    mode="over"
+    (openedChange)="sidenavOpened = $event"
+  >
+    <mat-nav-list *ngIf="user; else guestLinks">
       <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
         <mat-icon>dashboard</mat-icon>
         Dashboard
@@ -96,9 +85,49 @@
         Monthly reports
       </a>
       <a mat-list-item [routerLink]="['/alerts']" routerLinkActive="active">
-        <mat-icon>notifications</mat-icon>¡
+        <mat-icon>notifications</mat-icon>
         Custom alerts
       </a>
+      <a mat-list-item (click)="logOut()">
+        <mat-icon>exit_to_app</mat-icon>
+        LogOut
+      </a>
     </mat-nav-list>
+    <ng-template #guestLinks>
+      <mat-nav-list>
+        <a
+          mat-list-item
+          [routerLink]="['/auth/login']"
+          routerLinkActive="active"
+        >
+          <mat-icon>login</mat-icon>
+          Login
+        </a>
+        <a
+          mat-list-item
+          [routerLink]="['/auth/register']"
+          routerLinkActive="active"
+        >
+          <mat-icon>person_add</mat-icon>
+          Register
+        </a>
+      </mat-nav-list>
+    </ng-template>
   </mat-sidenav>
-</mat-drawer-container> -->
+
+  <mat-sidenav-content>
+    <mat-toolbar class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+      <button
+        mat-icon-button
+        (click)="sidenav.toggle()"
+        fxShow="true"
+        fxHide.gt-sm
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Cost-Tracker</span>
+    </mat-toolbar>
+    <!-- Rest of your page content... -->
+<!--  <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container> -->

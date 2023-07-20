@@ -1,12 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { OverviewReport } from 'src/app/entities/overviewReport';
 import { DateService } from 'src/app/services/reports/date/date.service';
 import { ReportService } from 'src/app/services/reports/report.service';

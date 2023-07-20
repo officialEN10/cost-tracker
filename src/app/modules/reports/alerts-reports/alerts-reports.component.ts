@@ -10,7 +10,7 @@ import { ReportService } from 'src/app/services/reports/report.service';
 })
 export class AlertsReportsComponent implements OnInit {
   @Input() useCurrentDate: boolean = false; // we use it in the dashboard
-  alertReports: AlertsReport[];
+  alertReports: AlertsReport[] = [];
 
   //the filter values
   month: number;

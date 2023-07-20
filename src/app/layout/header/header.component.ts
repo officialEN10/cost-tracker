@@ -10,10 +10,11 @@ import { MatSidenav } from '@angular/material/sidenav';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent implements OnInit {
   user: User | null;
   isLoginPage: boolean = true;
   @ViewChild('sidenav', { static: false }) sidenav: MatSidenav;
+  sidenavOpened = false;
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -31,25 +32,20 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         if (event instanceof NavigationEnd)
           this.isLoginPage = this.router.url.includes('/auth/login'); //we compare the actual url after the nav ends with the login url
       });
+
+    this.router.events.subscribe(() => {
+      if (this.sidenav && this.isScreenSmall()) {
+        this.sidenav.close();
+      }
+    });
   }
 
   logOut() {
     this.userService.logOut();
     this.isLoginPage = true;
   }
-
-  ngAfterViewInit() {
-    // console.log(this.sidenav); // just for debugging
-  }
-
-  toggleSidenav() {
-    this.sidenav.toggle();
-  }
-
-  reason = '';
-
-  close(reason: string) {
-    this.reason = reason;
-    this.sidenav.close();
+  // Function to detect if screen is small
+  isScreenSmall(): boolean {
+    return window.innerWidth < 960; // Change this to the size you consider "small"
   }
 }

@@ -30,11 +30,6 @@ app-footer {
   margin-top: auto;
 }
 
-.container {
-  padding: 10px;
-  margin: 10px;
-}
-
 mat-card {
   padding: 50px;
   margin: 50px;
@@ -67,6 +62,11 @@ mat-header-cell {
   justify-content: center;
   padding: 16px;
   border: solid 1px;
+}
+
+.container {
+  padding: 10px;
+  margin: 10px;
 }
 
 .toolbar {

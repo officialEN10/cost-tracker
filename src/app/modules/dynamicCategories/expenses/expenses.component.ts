@@ -15,7 +15,7 @@ import { Category } from 'src/app/entities/category';
   styleUrls: ['./expenses.component.scss'],
 })
 export class ExpensesComponent implements OnInit {
-  expenses: Expense[];
+  expenses: Expense[] = [];
   displayedColumns: string[] = [
     'date',
     'concept',

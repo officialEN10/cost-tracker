@@ -13,7 +13,7 @@ import { CsvExportService } from 'src/app/shared/csv-export/csv-export.service';
   styleUrls: ['./alerts.component.scss'],
 })
 export class AlertsComponent implements OnInit {
-  alerts: Alert[];
+  alerts: Alert[] = [];
   displayedColumns: string[] = [
     'Alert',
     'Condition',

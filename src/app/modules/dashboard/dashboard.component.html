@@ -3,8 +3,10 @@
     <div
       fxFlex="100"
       fxFlex.lt-md="100"
+      fxFlex.lt-sm="100"
       fxLayout="row"
       fxLayout.lt-md="column"
+      fxLayout.lt-sm="column"
       fxLayoutGap="16px"
       fxLayoutAlign="center center"
       style="padding: 1px; padding-bottom: 0px"
@@ -16,7 +18,12 @@
         <app-alerts-reports [useCurrentDate]="true"></app-alerts-reports>
       </div>
     </div>
-    <div fxFlex="80" fxFlex.lt-md="80" style="padding: 0 80px">
+    <div
+      fxFlex="80"
+      fxFlex.lt-md="80"
+      fxFlex.lt-sm="100"
+      style="padding: 0 80px"
+    >
       <app-overview-reports [useCurrentDate]="true"></app-overview-reports>
     </div>
   </div>
