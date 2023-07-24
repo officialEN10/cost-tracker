@@ -11,20 +11,6 @@ import { Attachment } from 'src/app/entities/attachment';
 export class AttachmentService {
   constructor(private http: HttpClient) {}
 
-  createAttachment(newAttachment: FormData): Observable<Attachment> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
-      }),
-    };
-
-    return this.http.post<Attachment>(
-      baseURL + 'attachment',
-      newAttachment,
-      httpOptions
-    );
-  }
-
   getAttachment(idAttachment: string): Observable<Attachment> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -63,6 +49,36 @@ export class AttachmentService {
     window.URL.revokeObjectURL(url);
   }
 
+  deleteAttachment(idAttachment: string): Observable<Attachment> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+
+    return this.http.delete<Attachment>(
+      baseURL + 'attachment/' + idAttachment,
+      httpOptions
+    );
+  }
+
+  //extra
+
+  createAttachment(newAttachment: FormData): Observable<Attachment> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+
+    return this.http.post<Attachment>(
+      baseURL + 'attachment',
+      newAttachment,
+      httpOptions
+    );
+  }
+
   updateAttachment(
     idAttachment: string,
     updatedAttachment: Attachment
@@ -77,20 +93,6 @@ export class AttachmentService {
     return this.http.put<Attachment>(
       baseURL + 'attachment/' + idAttachment,
       updatedAttachment,
-      httpOptions
-    );
-  }
-
-  deleteAttachment(idAttachment: string): Observable<Attachment> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
-      }),
-    };
-
-    return this.http.delete<Attachment>(
-      baseURL + 'attachment/' + idAttachment,
       httpOptions
     );
   }

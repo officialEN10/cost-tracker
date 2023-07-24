@@ -23,11 +23,5 @@ export class DashboardComponent implements OnInit {
     this.reportService
       .getCategories({ month: month, year: year })
       .subscribe((reports) => (this.categoriesReports = reports));
-
-    // this.reportService
-    //   .getOverview({ month: month, year: year })
-    //   .subscribe((reports) => {
-    //     this.overviewReports = reports;
-    //   });
   }
 }
